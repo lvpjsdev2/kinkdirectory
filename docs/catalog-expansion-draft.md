@@ -1,13 +1,13 @@
 # Catalog expansion draft — for review
 
-**Status: approved by the author on 2026-10-02, as drafted.** All 180 items ship; the ➖ and ✂️ markers were never applied.
+**Status: approved by the author on 2026-10-02, as drafted.** All items ship; the ➖ and ✂️ markers were never applied. One item was later dropped by the batch validator: `toys/sounding`, which already exists in the catalog as a role-specific kink.
 
-Proposed batch of **180 new kinks** across 3 new categories and 18 existing ones. This document exists to be cut and reworded. Mark rows with ✂️ to remove, edit any label freely.
+Proposed batch of **179 new kinks** across 3 new categories and 18 existing ones. This document exists to be cut and reworded. Mark rows with ✂️ to remove, edit any label freely.
 
 Review notes:
 
 - Labels are drafted in **English and Dutch**. Dutch is the source locale (ADR 0001); final nl wording is the author's call. Auto-translation is dropped per the same decision.
-- **Dedup**: 15 of the original 195 proposals collided with existing catalog ids and were removed. The add-script re-validates id uniqueness at insert time and the review report flags near-duplicate wording.
+- **Dedup**: 15 of the original 195 proposals collided with existing catalog ids and were removed, and a 16th (`toys/sounding`) was caught later by the batch validator. The add-kinks script re-validates id uniqueness at insert time and the review report flags near-duplicate wording.
 - **Format legend**: `G` = general (one rating). `RS` = role_specific, default all four positions (`as_dom`, `for_sub`, `as_sub`, `for_dom`); deviations noted inline.
 - Every accepted item gets `addedAt` = batch release date and the next free sequential key (from 302).
 - ⚠️ **Open question for the author**: the batch is currently 103 RS / 77 G (**57% RS**). The existing catalog is 119 RS / 60 G (66%). The agreed target in planning was 30–40% RS. Either consciously accept the higher share, or trim/convert ~35 RS items (candidates marked ➖ below).
@@ -24,7 +24,7 @@ Review notes:
 | general | 16 |
 | ass_play | 8 |
 | restrictive | 7 |
-| toys | 12 |
+| toys | 11 |
 | domination | 11 |
 | no_consent | 6 |
 | taboo | 8 |
@@ -37,7 +37,7 @@ Review notes:
 | medium | 4 |
 | time_scale | 5 |
 | role_play | 6 |
-| **Total** | **180 (103 RS / 77 G)** |
+| **Total** | **179 (103 RS / 76 G)** |
 
 ## Known catalog issues (found during dedup, fix separately)
 
@@ -187,7 +187,6 @@ Review notes:
 | suction_toys | Suction toys for clit/nipples | Zuigspeelgoed voor clit/tepels | G |
 | glass_dildos | Glass dildos | Glazen dildo's | G |
 | metal_plugs | Steel plugs (temperature play) | Stalen plugs (temperatuurspel) | G |
-| sounding | Sounding | Sounding | G |
 | dildo_gag | Dildo gag for face use | Gezichtsgordel met dildo | RS |
 | double_penetration_toys | DP with toys on one person | DP met speelgoed bij één persoon | RS |
 | toy_rotation | A toy box where dom picks | Een speelgoedkist waar de dom kiest | RS |

@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "add-kinks": "node src/scripts/add-kinks.mjs",
     "release": "release-it"
   },
   "dependencies": {
