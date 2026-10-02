@@ -9,48 +9,56 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'skinny',
         format: 'general',
+        addedAt: 1790899200,
         key: 0,
       },
 
       {
         id: 'chubby',
         format: 'general',
+        addedAt: 1790899200,
         key: 1,
       },
 
       {
         id: 'small_breasts',
         format: 'general',
+        addedAt: 1790899200,
         key: 2,
       },
 
       {
         id: 'large_breasts',
         format: 'general',
+        addedAt: 1790899200,
         key: 3,
       },
 
       {
         id: 'small_cocks',
         format: 'general',
+        addedAt: 1790899200,
         key: 4,
       },
 
       {
         id: 'large_cocks',
         format: 'general',
+        addedAt: 1790899200,
         key: 5,
       },
 
       {
         id: 'small_butts',
         format: 'general',
+        addedAt: 1790899200,
         key: 6,
       },
 
       {
         id: 'big_butts',
         format: 'general',
+        addedAt: 1790899200,
         key: 7,
       },
 
@@ -64,48 +72,56 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'clothed_sex',
         format: 'general',
+        addedAt: 1790899200,
         key: 8,
       },
 
       {
         id: 'lingerie',
         format: 'general',
+        addedAt: 1790899200,
         key: 9,
       },
 
       {
         id: 'stockings',
         format: 'general',
+        addedAt: 1790899200,
         key: 10,
       },
 
       {
         id: 'heels',
         format: 'general',
+        addedAt: 1790899200,
         key: 11,
       },
 
       {
         id: 'leather',
         format: 'general',
+        addedAt: 1790899200,
         key: 12,
       },
 
       {
         id: 'latex',
         format: 'general',
+        addedAt: 1790899200,
         key: 13,
       },
 
       {
         id: 'uniform_costume',
         format: 'general',
+        addedAt: 1790899200,
         key: 14,
       },
 
       {
         id: 'cross_dressing',
         format: 'general',
+        addedAt: 1790899200,
         key: 15,
       },
 
@@ -119,6 +135,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'handjob_fingering',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -148,6 +165,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'oral',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -177,6 +195,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'deep_throat',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -206,6 +225,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'swallowing',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -225,6 +245,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'facials',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -243,6 +264,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'face_sitting',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -262,6 +284,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'edging',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -281,6 +304,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'teasing',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -300,6 +324,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'ruined',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -326,6 +351,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'anal_toys',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -345,6 +371,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'anal_sex_pegging',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -364,6 +391,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'rimming',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -393,6 +421,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'anal_double_penetration',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -412,6 +441,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'anal_fisting',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -438,6 +468,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'collar',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -457,6 +488,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'leash',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -476,6 +508,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'chastity',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -495,6 +528,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'bondage_light',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -514,6 +548,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'bondage_heavy',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -533,6 +568,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'encasement',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -552,6 +588,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cag',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1018,6 +1055,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'dildos',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1037,6 +1075,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'plugs',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1056,6 +1095,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'vibrators',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1075,6 +1115,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'sounding',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1100,12 +1141,14 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'dd_lg_md_lb',
         format: 'general',
+        addedAt: 1790899200,
         key: 46,
       },
 
       {
         id: 'domestic_servitude',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1125,6 +1168,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'slavery',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1144,6 +1188,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'pet_play',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1163,6 +1208,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'begging',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1182,6 +1228,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'discipline',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1201,6 +1248,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'forced_orgasm',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1220,6 +1268,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'orgasm_denial',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1326,6 +1375,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'dubious_consent',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1345,6 +1395,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'non_con_rape',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1364,6 +1415,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'blackmail_coercion',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1383,6 +1435,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'kidnapping',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1402,6 +1455,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'drugs',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1421,6 +1475,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'alcohol',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1440,6 +1495,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'sleep_play',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1466,54 +1522,63 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'incest',
         format: 'general',
+        addedAt: 1790899200,
         key: 59,
       },
 
       {
         id: 'age_gap',
         format: 'general',
+        addedAt: 1790899200,
         key: 60,
       },
 
       {
         id: 'interracial',
         format: 'general',
+        addedAt: 1790899200,
         key: 61,
       },
 
       {
         id: 'raceplay',
         format: 'general',
+        addedAt: 1790899200,
         key: 62,
       },
 
       {
         id: 'bestiality',
         format: 'general',
+        addedAt: 1790899200,
         key: 63,
       },
 
       {
         id: 'necrophilia',
         format: 'general',
+        addedAt: 1790899200,
         key: 64,
       },
 
       {
         id: 'cheating',
         format: 'general',
+        addedAt: 1790899200,
         key: 65,
       },
 
       {
         id: 'exhibitionism',
         format: 'general',
+        addedAt: 1790899200,
         key: 66,
       },
 
       {
         id: 'voyeurism',
         format: 'general',
+        addedAt: 1790899200,
         key: 67,
       },
 
@@ -1527,42 +1592,49 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'futanari_futa',
         format: 'general',
+        addedAt: 1790899200,
         key: 68,
       },
 
       {
         id: 'furry',
         format: 'general',
+        addedAt: 1790899200,
         key: 69,
       },
 
       {
         id: 'vore',
         format: 'general',
+        addedAt: 1790899200,
         key: 70,
       },
 
       {
         id: 'transformation',
         format: 'general',
+        addedAt: 1790899200,
         key: 71,
       },
 
       {
         id: 'tentacles',
         format: 'general',
+        addedAt: 1790899200,
         key: 72,
       },
 
       {
         id: 'monster_or_alien',
         format: 'general',
+        addedAt: 1790899200,
         key: 73,
       },
 
       {
         id: 'ghost',
         format: 'general',
+        addedAt: 1790899200,
         key: 74,
       },
 
@@ -1576,6 +1648,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'blood',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1595,6 +1668,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'watersports',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1614,6 +1688,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'scat',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1633,6 +1708,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'lactation',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1652,6 +1728,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'diapers',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1671,6 +1748,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cum_play',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1690,6 +1768,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'saliva_spit',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1776,6 +1855,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'glory_hole',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1795,6 +1875,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'name_calling',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1814,6 +1895,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'humiliation',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1840,6 +1922,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cock_pussy_worship',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1859,6 +1942,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'ass_worship',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1877,6 +1961,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'foot_play',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1896,6 +1981,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'tickling',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1915,6 +2001,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'sensation_play',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -1934,6 +2021,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'electro_stimulation',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2040,6 +2128,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'fisting',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2079,12 +2168,14 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'gangbang',
         format: 'general',
+        addedAt: 1790899200,
         key: 92,
       },
 
       {
         id: 'breath_play',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2104,6 +2195,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'impregnation',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2123,6 +2215,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'pregnancy',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2142,6 +2235,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'feminization',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2161,6 +2255,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cuckold_cuckquean',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2180,6 +2275,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'shaving',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2206,6 +2302,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'light_pain',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2225,6 +2322,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'heavy_pain',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2244,6 +2342,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'nipple_clamps',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2263,6 +2362,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'clothes_pins',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2282,6 +2382,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'caning',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2301,6 +2402,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'flogging',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2320,6 +2422,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'gagging_choking',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2339,6 +2442,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'spanking',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2358,6 +2462,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cock_pussy_slapping',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2377,6 +2482,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cock_pussy_torture',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2396,6 +2502,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'hot_wax',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2415,6 +2522,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'scratching',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2434,6 +2542,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'biting',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2453,6 +2562,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'cutting',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2472,6 +2582,7 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'snuff',
         format: 'role_specific',
+        addedAt: 1790899200,
         allowedPerspectives: [
 
           {
@@ -2658,42 +2769,49 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'skype',
         format: 'general',
+        addedAt: 1790899200,
         key: 114,
       },
 
       {
         id: 'whatsapp',
         format: 'general',
+        addedAt: 1790899200,
         key: 115,
       },
 
       {
         id: 'kik',
         format: 'general',
+        addedAt: 1790899200,
         key: 116,
       },
 
       {
         id: 'reddit',
         format: 'general',
+        addedAt: 1790899200,
         key: 117,
       },
 
       {
         id: 'email',
         format: 'general',
+        addedAt: 1790899200,
         key: 118,
       },
 
       {
         id: 'discord',
         format: 'general',
+        addedAt: 1790899200,
         key: 119,
       },
 
       {
         id: 'other_medium',
         format: 'general',
+        addedAt: 1790899200,
         key: 120,
       },
 
@@ -2707,54 +2825,63 @@ export const kinkList: KinkCategory[] = [
       {
         id: 'short_term_scenes',
         format: 'general',
+        addedAt: 1790899200,
         key: 121,
       },
 
       {
         id: 'medium_term_scenes',
         format: 'general',
+        addedAt: 1790899200,
         key: 122,
       },
 
       {
         id: 'long_term_scenes',
         format: 'general',
+        addedAt: 1790899200,
         key: 123,
       },
 
       {
         id: 'quick_replies',
         format: 'general',
+        addedAt: 1790899200,
         key: 124,
       },
 
       {
         id: 'fast_replies',
         format: 'general',
+        addedAt: 1790899200,
         key: 125,
       },
 
       {
         id: 'normal_replies',
         format: 'general',
+        addedAt: 1790899200,
         key: 126,
       },
 
       {
         id: 'slow_replies',
         format: 'general',
+        addedAt: 1790899200,
         key: 127,
       },
 
       {
         id: 'glacial_replies',
         format: 'general',
+        addedAt: 1790899200,
         key: 128,
       },
 
       {
         id: 'occasional_replies',
         format: 'general',
+        addedAt: 1790899200,
         key: 129,
       },
 

@@ -62,18 +62,29 @@ export const useKinkListState = createGlobalState(() => {
     return kinkLists.value.find(list => list.id === activeListId.value) || null
   })
 
-  const twoDaysAgo = Math.floor(Date.now() / 1000) - (2 * 24 * 60 * 60) // 2 days in seconds
-  const recentlyAddedKinks = computed(() => {
+  // A kink is new for a list when it entered the catalog after that list was
+  // created, never on a calendar window — see docs/adr/0002. `addedAt` is stored
+  // in seconds, `created` in milliseconds, hence the conversion.
+  function isKinkNew(addedAt: number | undefined, list: KinkList | null = activeList.value): boolean {
+    if (!list || !addedAt)
+      return false
+    return addedAt * 1000 > list.created
+  }
+
+  function countNewKinksForList(list: KinkList | null): number {
+    if (!list)
+      return 0
     let count = 0
-    kinkList.forEach((category) => {
-      category.kinks.forEach((kink) => {
-        if (kink.addedAt && kink.addedAt > twoDaysAgo) {
+    for (const category of kinkList) {
+      for (const kink of category.kinks) {
+        if (isKinkNew(kink.addedAt, list))
           count++
-        }
-      })
-    })
+      }
+    }
     return count
-  })
+  }
+
+  const recentlyAddedKinks = computed(() => countNewKinksForList(activeList.value))
 
   // Count of new unfilled positions (not just kinks)
   const newUnfilledPositionsCount = computed(() => {
@@ -83,8 +94,8 @@ export const useKinkListState = createGlobalState(() => {
     let totalUnfilled = 0
 
     allAvailableKinks.forEach((item) => {
-      // Only count positions for new kinks
-      if (item.kink.addedAt && item.kink.addedAt > twoDaysAgo) {
+      // Only count positions for kinks this list has not seen yet
+      if (isKinkNew(item.kink.addedAt)) {
         // Count each unfilled position
         item.positions.forEach((position) => {
           const value = getKinkChoice(item.kink, position)
@@ -575,7 +586,7 @@ export const useKinkListState = createGlobalState(() => {
 
     // Apply "only new" filter if enabled
     if (filters.value.showOnlyNew) {
-      shouldShow = shouldShow && (!!kink.addedAt && kink.addedAt > twoDaysAgo)
+      shouldShow = shouldShow && isKinkNew(kink.addedAt)
     }
 
     // Apply "only unfilled" filter if enabled
@@ -650,6 +661,8 @@ export const useKinkListState = createGlobalState(() => {
     createList,
     deleteList,
     recentlyAddedKinks,
+    isKinkNew,
+    countNewKinksForList,
     updateList,
     setKinkChoice,
     getKinkChoice,
