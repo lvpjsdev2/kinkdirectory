@@ -51,7 +51,12 @@ const lgAndLarger = breakpoints.greater('lg')
 
 <template>
   <!-- Desktop version - circles in a row -->
-  <div v-if="lgAndLarger" class="flex space-x-1" data-rating-group>
+  <div
+    v-if="lgAndLarger"
+    class="flex space-x-1"
+    data-rating-group
+    :aria-label="kinkName || ''"
+  >
     <!-- Always show "Not Entered" (0) first -->
     <button
       type="button"
