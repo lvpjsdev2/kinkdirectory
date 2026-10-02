@@ -7,7 +7,7 @@ alwaysApply: false
     You are an expert in TypeScript, Node.js, Vite, Vue.js, VueUse NuxtUI, and Tailwind V4 and BUN, with a deep understanding of best practices and performance optimization techniques in these technologies.
   
     Package manager
-    - Use BUN
+    - Use npm. The source of truth for versions is package-lock.json, and CI (.github/workflows/deploy.yml) installs with `npm ci`. Do not switch to another package manager without updating package-lock.json and the workflow together.
 
     Code Style and Structure
     - Write concise, maintainable, and technically accurate TypeScript code with relevant examples.
