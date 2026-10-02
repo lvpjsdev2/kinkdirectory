@@ -1,4 +1,4 @@
-import type { KinkChoice, KinkDefinition, KinkList, UserRole } from '../types'
+import type { KinkChoice, KinkDefinition, KinkList, KinkPosition, RolePerspective, UserRole } from '../types'
 import { createGlobalState, useStorage } from '@vueuse/core'
 import { nanoid } from 'nanoid'
 import { computed, ref } from 'vue'
@@ -21,6 +21,24 @@ const ROLE_MAP: Record<string, number> = {
 
 // Role names in order (for decoding)
 const ROLE_NAMES = ['both', 'dom', 'sub']
+
+// A position names the partner slot a rating is about. The allowedPerspectives
+// entry it requires is fixed: it does not depend on which role the list answers for.
+type KinkSlot = Exclude<KinkPosition, 'general'>
+
+const POSITION_TARGET: Record<KinkSlot, RolePerspective> = {
+  as_dom: { role: 'dom', perspective: 'self' },
+  for_sub: { role: 'dom', perspective: 'partner' },
+  as_sub: { role: 'sub', perspective: 'self' },
+  for_dom: { role: 'sub', perspective: 'partner' },
+}
+
+// A 'both' list is a switch: it answers as a dom and as a sub, so it carries all four.
+const LIST_POSITIONS: Record<UserRole, KinkSlot[]> = {
+  dom: ['as_dom', 'for_sub'],
+  sub: ['as_sub', 'for_dom'],
+  both: ['as_dom', 'for_sub', 'as_sub', 'for_dom'],
+}
 
 export const useKinkListState = createGlobalState(() => {
   // Create kink mappings for old to new format
@@ -100,96 +118,32 @@ export const useKinkListState = createGlobalState(() => {
 
   const newKinksAvailable = computed(() => newUnfilledPositionsCount.value > 0)
 
-  // Function to determine if a kink should be visible based on user role
-  function isKinkVisibleForRole(kink: KinkDefinition, userRole: UserRole): boolean {
-    // General format kinks are always visible
-    if (kink.format === 'general') {
-      return true
+  // The positions a list answers for, in display order. A kink is visible when at
+  // least one position applies, so visibility and positions can never disagree.
+  function getKinkPositions(kink: KinkDefinition, userRole: UserRole): KinkPosition[] {
+    if (kink.format === 'general')
+      return ['general'] // General kinks are answered once, role-independent
+
+    if (kink.format !== 'role_specific' || !kink.allowedPerspectives)
+      return []
+
+    const positions = LIST_POSITIONS[userRole].filter((position) => {
+      const target = POSITION_TARGET[position]
+      return kink.allowedPerspectives!.some(
+        allowed => allowed.role === target.role && allowed.perspective === target.perspective,
+      )
+    })
+
+    if (positions.length === 0) {
+      console.warn(`No positions found for kink ${kink.id} (key: ${kink.key}) with role ${userRole}`, kink.allowedPerspectives)
     }
 
-    // For role-specific kinks, check if any of the allowed perspectives apply to the current role
-    if (kink.format === 'role_specific' && kink.allowedPerspectives) {
-      if (userRole === 'both') {
-        // In 'both' mode, only show kinks where perspective is 'self'
-        return kink.allowedPerspectives.some(
-          rp => (rp.role === 'dom' || rp.role === 'sub' || rp.role === 'both') && rp.perspective === 'self',
-        )
-      }
-      else {
-        // Otherwise check if this specific role is allowed
-        return kink.allowedPerspectives.some(
-          rp => rp.role === userRole || rp.role === 'both',
-        )
-      }
-    }
-
-    return false
+    return positions
   }
 
-  // Get the positions to display for a kink based on format and user role
-  function getKinkPositions(kink: KinkDefinition, userRole: UserRole): string[] {
-    if (kink.format === 'general') {
-      return ['general'] // General kinks just have one position
-    }
-
-    if (kink.format === 'role_specific' && kink.allowedPerspectives) {
-      const positions: string[] = []
-
-      if (userRole === 'both') {
-        // For 'both' mode, include dom/partner and sub/self perspectives
-        const hasDomPartner = kink.allowedPerspectives.some(
-          rp => rp.role === 'dom' && rp.perspective === 'partner',
-        )
-
-        const hasSubSelf = kink.allowedPerspectives.some(
-          rp => rp.role === 'sub' && rp.perspective === 'self',
-        )
-
-        if (hasDomPartner)
-          positions.push('for_sub')
-        if (hasSubSelf)
-          positions.push('as_sub')
-      }
-      else if (userRole === 'dom') {
-        // For dom users, check self and partner perspectives
-        const selfAllowed = kink.allowedPerspectives.some(
-          rp => (rp.role === 'dom' || rp.role === 'both') && rp.perspective === 'self',
-        )
-
-        const partnerAllowed = kink.allowedPerspectives.some(
-          rp => (rp.role === 'dom' || rp.role === 'both') && rp.perspective === 'partner',
-        )
-
-        if (selfAllowed)
-          positions.push('as_dom')
-        if (partnerAllowed)
-          positions.push('for_sub')
-      }
-      else if (userRole === 'sub') {
-        // For sub users, check self and partner perspectives
-        const selfAllowed = kink.allowedPerspectives.some(
-          rp => (rp.role === 'sub' || rp.role === 'both') && rp.perspective === 'self',
-        )
-
-        const partnerAllowed = kink.allowedPerspectives.some(
-          rp => (rp.role === 'sub' || rp.role === 'both') && rp.perspective === 'partner',
-        )
-
-        if (selfAllowed)
-          positions.push('as_sub')
-        if (partnerAllowed)
-          positions.push('for_dom')
-      }
-
-      // Note: Added for debugging purposes
-      if (positions.length === 0) {
-        console.warn(`No positions found for kink ${kink.id} (key: ${kink.key}) with role ${userRole}`, kink.allowedPerspectives)
-      }
-
-      return positions
-    }
-
-    return []
+  // Function to determine if a kink should be visible based on user role
+  function isKinkVisibleForRole(kink: KinkDefinition, userRole: UserRole): boolean {
+    return getKinkPositions(kink, userRole).length > 0
   }
 
   function createList(name: string, role: UserRole): string {
@@ -217,7 +171,7 @@ export const useKinkListState = createGlobalState(() => {
 
   function setKinkChoice(
     kinkDef: KinkDefinition,
-    position: string,
+    position: KinkPosition,
     choice: KinkChoice,
   ) {
     if (!activeList.value)
@@ -230,7 +184,7 @@ export const useKinkListState = createGlobalState(() => {
 
   function getKinkChoice(
     kinkDef: KinkDefinition,
-    position: string,
+    position: KinkPosition,
   ): KinkChoice {
     if (!activeList.value)
       return 0
@@ -537,11 +491,11 @@ export const useKinkListState = createGlobalState(() => {
   }
 
   // Get all visible kinks for quiz mode in a flat structure
-  function getVisibleKinksForQuiz(): Array<{ categoryId: string, kink: KinkDefinition, positions: string[] }> {
+  function getVisibleKinksForQuiz(): Array<{ categoryId: string, kink: KinkDefinition, positions: KinkPosition[] }> {
     if (!activeList.value)
       return []
 
-    const allKinks: Array<{ categoryId: string, kink: KinkDefinition, positions: string[] }> = []
+    const allKinks: Array<{ categoryId: string, kink: KinkDefinition, positions: KinkPosition[] }> = []
 
     // Get categories with type assertion to ensure TypeScript knows the structure
 

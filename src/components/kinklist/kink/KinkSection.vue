@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { KinkDefinition } from '../../../types'
+import type { KinkDefinition, KinkPosition } from '../../../types'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useKinkListState } from '../../../composables/useKinkList'
@@ -12,7 +12,7 @@ const props = defineProps<{
   kinks: KinkDefinition[]
 }>()
 const { t } = useI18n()
-const { activeList, isKinkVisibleForRole } = useKinkListState()
+const { activeList, isKinkVisibleForRole, getKinkPositions } = useKinkListState()
 
 // Filter kinks to only show those that are applicable to the user's role
 const visibleKinks = computed(() => {
@@ -36,126 +36,28 @@ const roleSpecificKinks = computed(() => {
 // Check if this subcategory has any visible kinks
 const isVisible = computed(() => visibleKinks.value.length > 0)
 
-// Get appropriate column labels based on user role
-const columnLabels = computed(() => {
-  if (!activeList.value)
-    return { left: '', right: '' }
-
-  if (activeList.value.role === 'both') {
-    return {
-      left: t('app.giving'), // dom partner perspective
-      right: t('app.receiving'), // sub self perspective
-    }
-  }
-  else if (activeList.value.role === 'dom') {
-    return {
-      left: t('app.giving'),
-      right: t('app.receiving'),
-    }
-  }
-  else { // 'sub'
-    return {
-      left: t('app.receiving'),
-      right: t('app.giving'),
-    }
-  }
-})
-
-// For 'both' mode: Check if any kink needs the left (dom) column
-const needsLeftColumn = computed(() => {
-  if (!activeList.value)
-    return true
-
-  if (activeList.value.role === 'both') {
-    // For 'both' mode, check if any kinks have a dom partner perspective
-    return roleSpecificKinks.value.some((kink) => {
-      if (!kink.allowedPerspectives)
-        return false
-
-      // Check if this kink has a dom partner perspective
-      return kink.allowedPerspectives.some(
-        rp => rp.role === 'dom' && rp.perspective === 'partner',
-      )
-    })
-  }
-  else if (activeList.value.role === 'dom') {
-    // Check if any kink has a dom self perspective
-    return roleSpecificKinks.value.some((kink) => {
-      if (!kink.allowedPerspectives)
-        return false
-
-      return kink.allowedPerspectives.some(
-        rp => (rp.role === 'dom' && rp.perspective === 'partner'),
-      )
-    })
-  }
-  else { // 'sub'
-    // Check if any kink has a sub self perspective
-    return roleSpecificKinks.value.some((kink) => {
-      if (!kink.allowedPerspectives)
-        return false
-
-      return kink.allowedPerspectives.some(
-        rp => rp.role === 'sub' && rp.perspective === 'self',
-      )
-    })
-  }
-})
-
-// Check if any kink needs the right column
-const needsRightColumn = computed(() => {
-  if (!activeList.value)
-    return false
-
-  if (activeList.value.role === 'both') {
-    // For 'both' mode, check if any kinks have a sub self perspective
-    return roleSpecificKinks.value.some((kink) => {
-      if (!kink.allowedPerspectives)
-        return false
-
-      // Check if this kink has a sub self perspective
-      return kink.allowedPerspectives.some(
-        rp => rp.role === 'sub' && rp.perspective === 'self',
-      )
-    })
-  }
-  else if (activeList.value.role === 'dom') {
-    // Check if any kink has a for_sub position
-    return roleSpecificKinks.value.some((kink) => {
-      if (!kink.allowedPerspectives)
-        return false
-
-      // Check if kink has dom partner perspective
-      return kink.allowedPerspectives.some(
-        rp => (rp.role === 'dom' && rp.perspective === 'self'),
-      )
-    })
-  }
-  else { // 'sub'
-    // Check if any kink has a for_dom position
-    return roleSpecificKinks.value.some((kink) => {
-      if (!kink.allowedPerspectives)
-        return false
-
-      // Check if kink has sub partner perspective
-      return kink.allowedPerspectives.some(
-        rp => rp.role === 'sub' && rp.perspective === 'partner',
-      )
-    })
-  }
-})
-
-// Determine which column labels to show based on the role and what's needed
-const visibleColumnLabels = computed(() => {
+// Expand kinks into one entry per position. A kink the list answers for twice
+// becomes two rows, each stating one position.
+const roleSpecificRows = computed(() => {
   if (!activeList.value)
     return []
 
-  const labels = []
-  if (needsLeftColumn.value)
-    labels.push(columnLabels.value.left)
-  if (needsRightColumn.value)
-    labels.push(columnLabels.value.right)
-  return labels
+  const rows: Array<{ kink: KinkDefinition, position: KinkPosition }> = []
+
+  for (const kink of roleSpecificKinks.value) {
+    for (const position of getKinkPositions(kink, activeList.value.role)) {
+      rows.push({ kink, position })
+    }
+  }
+
+  return rows
+})
+
+const generalRows = computed(() => {
+  if (!activeList.value)
+    return []
+
+  return generalKinks.value.map(kink => ({ kink, position: 'general' as KinkPosition }))
 })
 </script>
 
@@ -176,34 +78,34 @@ const visibleColumnLabels = computed(() => {
 
       <template #content>
         <KinkRow
-          v-for="(kink, index) in generalKinks"
-          :key="kink.id"
+          v-for="(row, index) in generalRows"
+          :key="`${row.kink.id}_${row.position}`"
           :category-id="categoryId"
-          :kink="kink"
-          :is-last-item="index === generalKinks.length - 1"
+          :kink="row.kink"
+          :position="row.position"
+          :is-last-item="index === generalRows.length - 1"
         />
       </template>
     </KinkSectionContainer>
 
-    <!-- Role-Specific Kinks Table -->
-    <KinkSectionContainer v-if="roleSpecificKinks.length > 0">
+    <!-- Role-Specific Kinks Table: one row per position -->
+    <KinkSectionContainer v-if="roleSpecificRows.length > 0">
       <template #header>
         <KinkSectionHeader
           :title="t(`categories.${categoryId}`)"
-          :column-labels="visibleColumnLabels"
+          :column-labels="[t('app.preference')]"
           :is-general-section="false"
         />
       </template>
 
       <template #content>
         <KinkRow
-          v-for="(kink, index) in roleSpecificKinks"
-          :key="kink.id"
+          v-for="(row, index) in roleSpecificRows"
+          :key="`${row.kink.key}_${row.position}`"
           :category-id="categoryId"
-          :kink="kink"
-          :needs-right-column="needsRightColumn"
-          :needs-left-column="needsLeftColumn"
-          :is-last-item="index === roleSpecificKinks.length - 1"
+          :kink="row.kink"
+          :position="row.position"
+          :is-last-item="index === roleSpecificRows.length - 1"
         />
       </template>
     </KinkSectionContainer>
