@@ -45,6 +45,21 @@ rating; it is the absence of one.
 **List** — a person's saved record: a name, a role, and every choice made
 across all kinks and positions. One person may hold several.
 
+**Position row** — one answerable unit of a List: a Kink together with one
+Position it can be answered from. A List renders one row per Position, and
+each row stands on its own.
+
+**Display filter** — a restriction on which Position rows are shown (New
+only, unanswered only, or by Choice). A filter changes the view, never the
+List. _Avoid_: unfilled (except as the filter's display label).
+
+**New** — a Kink that entered the catalogue within the last two days:
+strictly newer than 48 hours. A Kink with no recorded date is never New.
+
+**Progress** — how much of a List is answered: the share of its answerable
+Positions that carry a Choice. Always measured over the whole List, never
+over a filtered subset.
+
 ## Core statements
 
 - A kink is answered **once per position** the list can answer it from. A kink
@@ -54,6 +69,11 @@ across all kinks and positions. One person may hold several.
 - A *Both* list is a **switch**: it answers as a dominant and as a submissive,
   so it carries all four positions. It is not "the sub role with extra steps".
 - General kinks are role-independent and carry no position label.
+- Display filters are judged **by the Position row, not the Kink**. A row is
+  visible under active filters only when that row itself satisfies every
+  active filter; a Kink never qualifies through one of its other Positions.
+- A filtered view is a subset of the List. Filtering never changes stored
+  Choices, and Progress ignores filters entirely.
 
 ## Disputed
 
