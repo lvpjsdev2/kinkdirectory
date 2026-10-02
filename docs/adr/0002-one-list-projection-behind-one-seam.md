@@ -57,6 +57,32 @@ without Vue.
 **Localized or styled rows.** Rejected: couples the projection to locale
 state and makes the interface presentation-shaped; adapters keep that job.
 
+## Interface (design-it-twice outcome)
+
+Three interface designs were compared (one God-call output; two entry
+points with a quiz function; quiz-as-filter-data). The chosen shape:
+
+- **One entry point**: `projectList(input): ListProjection`, pure, in
+  `src/projection/`. There is no quiz entry point and no quiz field: the
+  normal quiz calls it with no filters, the new-only quiz calls it with
+  `{ showOnlyNew: true, showOnlyUnfilled: true }`, the badge count reads
+  `rows.length > 0` of that same call — the quiz scope *is* the filter
+  conjunction, so it cannot drift from it.
+- **Input**: `{ catalogue, list, filters, now }` where `filters` is the
+  existing filter-state shape verbatim, `now` is unix seconds, and a null
+  list projects empty instead of throwing. No reactive state, locale, or
+  styling behind the seam; the Vue composable is just the reactivity
+  adapter.
+- **Output**: `categories` (`{ category, general: Row[], roleSpecific: Row[] }`
+  — the two-table structure the UI and export actually render), flat
+  `rows` carrying `{ categoryId, kink, position, choice, isNew }` for quiz
+  traversal, `progress` (whole List, with percent), and `unanswerable`
+  diagnostics (replacing the `console.warn`). No `byKink`, no storage keys
+  on rows, no badge-count fields.
+- **Rejected**: a quiz entry point with a `scope` option (second traversal
+  concept), clock/catalogue ports (one adapter = hypothetical seam),
+  reactive or locale-aware rows, any second projection root.
+
 ## Consequences
 
 - Filter, progress, quiz, and screenshot behavior change in one
