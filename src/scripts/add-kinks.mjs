@@ -104,6 +104,31 @@ function validate(batch, catalog) {
   return { errors, warnings, declaredCategories }
 }
 
+// A batch may carry a hand-written label overlay at `<batch>.ru.json`, picked up
+// automatically. The en/nl layer stays reproducible from the draft; translations
+// are authored, so they live apart.
+function applyLabelOverlay(batch, batchPath) {
+  const overlayPath = batchPath.replace(/\.json$/, '.ru.json')
+  if (!fs.existsSync(overlayPath))
+    return { batch, overlay: null, overlayPath }
+
+  const overlay = JSON.parse(fs.readFileSync(overlayPath, 'utf8'))
+  const labels = overlay.labels ?? {}
+  const used = new Set()
+
+  for (const item of batch.items) {
+    const label = labels[item.id]
+    if (label)
+      item.ru = label
+    used.add(item.id)
+  }
+
+  const unused = Object.keys(labels).filter(id => !used.has(id))
+  const missing = batch.items.filter(item => !item.ru).map(item => item.id)
+
+  return { batch, overlay, overlayPath, unused, missing }
+}
+
 function main() {
   const args = process.argv.slice(2)
   const batchPath = args.find(arg => !arg.startsWith('--'))
@@ -118,7 +143,18 @@ function main() {
     process.exit(2)
   }
 
-  const batch = JSON.parse(fs.readFileSync(batchPath, 'utf8'))
+  const { batch, overlayPath, unused, missing } = applyLabelOverlay(
+    JSON.parse(fs.readFileSync(batchPath, 'utf8')),
+    batchPath,
+  )
+
+  if (overlayPath) {
+    console.log(`\nlabel overlay ${path.basename(overlayPath)}`)
+    if (unused?.length)
+      console.log(`  ${unused.length} label(s) in the overlay match no item: ${unused.slice(0, 5).join(', ')}`)
+    if (missing?.length)
+      console.log(`  ${missing.length} item(s) without a ru label: ${missing.slice(0, 5).join(', ')}`)
+  }
   const catalog = readCatalog()
   const { errors, warnings, declaredCategories } = validate(batch, catalog)
 
