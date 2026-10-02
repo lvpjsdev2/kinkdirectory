@@ -1,6 +1,8 @@
 # Catalog expansion draft — for review
 
-Proposed batch of **180 new kinks** across 3 new categories and 18 existing ones. Nothing is final: this document exists to be cut and reworded. Mark rows with ✂️ to remove, edit any label freely.
+**Status: approved by the author on 2026-10-02, as drafted.** All 180 items ship; the ➖ and ✂️ markers were never applied.
+
+Proposed batch of **180 new kinks** across 3 new categories and 18 existing ones. This document exists to be cut and reworded. Mark rows with ✂️ to remove, edit any label freely.
 
 Review notes:
 

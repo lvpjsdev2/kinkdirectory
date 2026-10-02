@@ -26,18 +26,9 @@ The directory allows you to specify your role preference, which helps tailor you
 ## 🌍 Supported Languages
 
 - English
-- Nederlands (Dutch)
-- Español (Spanish)
-- Français (French)
-- Deutsch (German)
-- Italiano (Italian)
-- Português (Portuguese)
 - Русский (Russian)
-- 中文 (Chinese)
-- 日本語 (Japanese)
-- 한국어 (Korean)
-- العربية (Arabic)
-- हिन्दी (Hindi)
+
+Dutch is kept in the repository as the source language for new labels, but is not offered in the UI.
 
 ## 🛡️ Privacy First
 

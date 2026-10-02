@@ -21,7 +21,7 @@ Three things are broken or missing today:
 
 | ADR | Decision |
 |---|---|
-| [0001](../../docs/adr/0001-ship-with-en-and-nl-locales-only.md) | Ship en + nl only; delete the other eleven locale files |
+| [0001](../adr/0001-ship-with-en-and-ru-locales.md) | Ship en + ru; keep nl as the source language; delete the other eleven |
 | [0002](../../docs/adr/0002-new-kink-relative-to-list-creation.md) | "New" means `kink.addedAt > list.created`; no wall-clock window |
 
 Vocabulary for every term used below is in [`CONTEXT.md`](../../CONTEXT.md).
@@ -84,7 +84,7 @@ Rules:
 
 ### Locale entries
 
-Each new kink needs `en` and `nl` labels. No other locale is written. The script writes stubs derived from the input; the author edits wording afterwards.
+Each new kink needs `en` and `ru` labels — the two locales the UI ships. Dutch labels are optional. The script writes stubs derived from the input; the author edits wording afterwards.
 
 ### Newness
 
@@ -107,13 +107,13 @@ The report exists because role-specific data cannot be eyeballed from a diff; th
 
 ## Locale reduction
 
-Delete `es, fr, de, it, pt, zh, ja, ko, ar, hi, hu` from `src/locales/`. Remove them from `SUPPORTED_LOCALES` and the messages map in `src/i18n/index.ts`, and from the language switcher. Keep `nl` as the type source (`MessageSchema = typeof nl`) and `en` as the fallback. Remove the `translate` script from `package.json`. Update the language list in `README.md`.
+Delete `es, fr, de, it, pt, zh, ja, ko, ar, hi, hu` from `src/locales/` and their CSVs from `src/locales-csv/`. Trim `SUPPORTED_LOCALES` and the messages map in `src/i18n/index.ts` to the locales the UI ships, and trim the language switcher to match. Keep `nl` as the type source (`MessageSchema = typeof nl`) and `en` as the fallback. Remove the `translate` script from `package.json`. Update the language list in `README.md`.
 
 ## Acceptance criteria
 
 - [ ] Every accepted draft kink exists in `src/data/kinks.ts` with a unique id, a unique key, and `addedAt` set.
 - [ ] `yarn typecheck` and `yarn lint` pass.
-- [ ] `src/locales/` contains only `en.json` and `nl.json`; the app boots in both and the switcher offers exactly those two.
+- [ ] `src/locales/` contains only `en.json`, `nl.json` and `ru.json`; the switcher offers English and Russian, and the app boots in both.
 - [ ] A list created before the batch shows the batch as new; a list created after does not; the 2-day window is gone from the code.
 - [ ] A share link created after the change round-trips a new key (e.g. `key: 302`) without loss.
 - [ ] The review report has been read and its warnings resolved or consciously accepted.
