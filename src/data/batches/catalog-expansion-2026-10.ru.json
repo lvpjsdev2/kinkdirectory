@@ -1,9 +1,9 @@
 {
   "note": "Hand-written Russian labels for catalog-expansion-2026-10, picked up automatically by add-kinks.mjs from the <batch>.ru.json convention. Kept apart from the generated batch file so the en/nl layer stays reproducible from the approved draft, while translations are authored by hand.",
   "categories": {
-    "aftercare": "Забота после сессии",
-    "communication": "Коммуникация",
-    "service_ritual": "Служение и ритуалы"
+    "aftercare": { "en": "Aftercare", "ru": "Забота после сессии", "nl": "Nazorg" },
+    "communication": { "en": "Communication", "ru": "Коммуникация", "nl": "Communicatie" },
+    "service_ritual": { "en": "Service & Ritual", "ru": "Служение и ритуалы", "nl": "Dienst & Ritualen" }
   },
   "labels": {
     "water_snacks": "Вода и перекусы после сессии",
