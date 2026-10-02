@@ -19,6 +19,22 @@ export interface RolePerspective {
   perspective: KinkPerspective // Whether this is for self or partner
 }
 
+// How a position is presented to the user. Role-oriented wording, because a
+// position names the partner slot a rating is about, not the direction of the act.
+export interface KinkPositionDisplay {
+  icon: string
+  labelKey: string
+  color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' | undefined
+}
+
+export const KINK_POSITION_DISPLAY: Record<KinkPosition, KinkPositionDisplay> = {
+  general: { icon: 'i-lucide-list-checks', labelKey: 'app.general', color: 'info' },
+  as_dom: { icon: 'tdesign:user-arrow-right', labelKey: 'app.position_as_dom', color: 'primary' },
+  for_sub: { icon: 'tdesign:user-arrow-right', labelKey: 'app.position_for_sub', color: 'secondary' },
+  as_sub: { icon: 'tdesign:user-arrow-left', labelKey: 'app.position_as_sub', color: 'primary' },
+  for_dom: { icon: 'tdesign:user-arrow-left', labelKey: 'app.position_for_dom', color: 'secondary' },
+}
+
 // Kink definition with formats
 export interface KinkDefinition {
   id: string

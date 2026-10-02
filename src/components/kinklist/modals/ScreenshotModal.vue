@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useScreenshot } from '../../../composables/useScreenshot'
+import ConfirmModal from './ConfirmModal.vue'
 
 const props = defineProps<{
   dataUrl: string
@@ -13,6 +14,7 @@ const emit = defineEmits<{
 }>()
 const { t } = useI18n()
 const toast = useToast()
+const overlay = useOverlay()
 const { takeScreenshot } = useScreenshot()
 
 const imgurUploading = ref(false)
@@ -93,6 +95,23 @@ function copyImgurUrl() {
 
 function handleImageLoaded() {
   imageLoading.value = false
+}
+// Uploading leaves the browser: ask first, and only this confirms it.
+async function requestUploadToImgur() {
+  if (hasUploadedOnce.value)
+    return
+
+  const confirmModal = overlay.create(ConfirmModal, {
+    props: {
+      title: t('app.upload_confirm_title'),
+      message: t('app.upload_confirm_message'),
+      confirmText: t('app.upload_confirm_action'),
+      confirmColor: 'warning',
+    },
+  })
+
+  if (await confirmModal.open())
+    uploadToImgur()
 }
 
 function uploadToImgur() {
@@ -238,10 +257,10 @@ function handleCancel() {
         <UButton
           v-if="screenshotData && !imgurUrl"
           icon="i-lucide-upload-cloud"
-          color="primary"
+          variant="outline"
           :loading="imgurUploading"
           :disabled="hasUploadedOnce"
-          @click="uploadToImgur"
+          @click="requestUploadToImgur"
         >
           {{ t('app.upload_to_imgur') }}
         </UButton>

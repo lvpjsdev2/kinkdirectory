@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { KinkChoice as KinkChoiceType, KinkDefinition } from '../../../types'
+import type { KinkChoice as KinkChoiceType, KinkDefinition, KinkPosition } from '../../../types'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getDisplayValue } from '../../../composables/kink.helpers'
 import { useKinkListState } from '../../../composables/useKinkList'
 import { useSettings } from '../../../composables/useSettings'
+import { KINK_POSITION_DISPLAY } from '../../../types'
 
 defineProps<{
   listId: string
@@ -19,12 +20,11 @@ const {
   getKinkChoice,
   newUnfilledPositionsCount,
   newKinksAvailable,
-  activeList,
 } = useKinkListState()
 const { kinkChoiceOrder, settings } = useSettings()
 
 // Quiz state variables
-const allKinks = ref<Array<{ categoryId: string, kink: KinkDefinition, positions: string[] }>>([])
+const allKinks = ref<Array<{ categoryId: string, kink: KinkDefinition, positions: KinkPosition[] }>>([])
 const currentIndex = ref(0)
 const currentPositionIndex = ref(0)
 const quizCompleted = ref(false)
@@ -136,73 +136,13 @@ const currentValue = computed((): KinkChoiceType => {
   )
 })
 
-// Helper function to get position label
-function getPositionLabel(position: string): {
-  icon: string
-  label: string
-  color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral' | undefined
-} {
-  if (position === 'general') {
-    return {
-      icon: 'i-lucide-list-checks',
-      label: t('app.general'),
-      color: 'info',
-    }
-  }
-  if (activeList.value?.role === 'both') {
-    if (position === 'as_sub') {
-      return {
-        icon: 'tdesign:user-arrow-left',
-        label: t('app.receiving'),
-        color: 'primary',
-      }
-    }
-    if (position === 'for_sub') {
-      return {
-        icon: 'tdesign:user-arrow-right',
-        label: t('app.giving'),
-        color: 'secondary',
-      }
-    }
-  }
-  if (activeList.value?.role === 'dom') {
-    if (position === 'for_sub') {
-      return {
-        icon: 'tdesign:user-arrow-right',
-        label: t('app.giving'),
-        color: 'secondary',
-      }
-    }
-    if (position === 'as_dom') {
-      return {
-        icon: 'tdesign:user-arrow-left',
-        label: t('app.receiving'),
-        color: 'primary',
-      }
-    }
-  }
-  if (activeList.value?.role === 'sub') {
-    if (position === 'as_sub') {
-      return {
-        icon: 'tdesign:user-arrow-left',
-        label: t('app.receiving'),
-        color: 'primary',
-      }
-    }
-    if (position === 'for_dom') {
-      return {
-        icon: 'tdesign:user-arrow-right',
-        label: t('app.giving'),
-        color: 'secondary',
-      }
-    }
-  }
-  return {
-    icon: '',
-    label: '',
-    color: 'neutral',
-  }
-}
+// Position wording is shared with the list table so a position is named the
+// same way everywhere. See KINK_POSITION_DISPLAY.
+const positionDisplay = computed(() =>
+  currentPosition.value
+    ? { ...KINK_POSITION_DISPLAY[currentPosition.value], label: t(KINK_POSITION_DISPLAY[currentPosition.value].labelKey) }
+    : null,
+)
 
 // Provide haptic feedback on mobile devices
 function triggerHapticFeedback() {
@@ -464,10 +404,10 @@ const quizTitle = computed(() => {
               {{ getKinkLabel() }}
             </h3>
 
-            <div class="flex justify-center">
-              <UBadge size="md" :color="getPositionLabel(currentPosition).color" class="mb-0.5">
-                <UIcon :name="getPositionLabel(currentPosition).icon" class="text-xs" />
-                {{ getPositionLabel(currentPosition).label }}
+            <div v-if="positionDisplay" class="flex justify-center">
+              <UBadge size="md" :color="positionDisplay.color" class="mb-0.5">
+                <UIcon :name="positionDisplay.icon" class="text-xs" />
+                {{ positionDisplay.label }}
               </UBadge>
             </div>
 
