@@ -51,8 +51,9 @@ const roleSpecificRows = computed(() => {
     // Kink-level gate first (new / category visibility), then position-level
     // filters (unfilled / choice). Both must agree for the row to appear.
     const passesKinkFilters = shouldShowKink(kink)
+
     const matchingPositions = passesKinkFilters
-      ? positions.filter(position => {
+      ? positions.filter((position) => {
           // "Only unfilled" means this position has no stored choice yet.
           if (filters.value.showOnlyUnfilled)
             return getKinkChoice(kink, position) === 0
