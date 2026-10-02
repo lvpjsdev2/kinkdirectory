@@ -391,7 +391,7 @@ export const kinkList: KinkCategory[] = [
       },
 
       {
-        id: 'double_penetration',
+        id: 'anal_double_penetration',
         format: 'role_specific',
         allowedPerspectives: [
 
