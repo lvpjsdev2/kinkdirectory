@@ -39,6 +39,10 @@ Your privacy is our top priority:
 - 🚫 **No tracking** - No analytics or cookies that follow you around
 - 📖 **Open source** - Code is transparent and available for review
 
+> **One exception:** uploading a screenshot to Imgur. That is the only thing that
+> ever leaves your browser, it sends only the image and never the list itself, and
+> it never happens without a confirmation step. Downloading stays fully local.
+
 ## 🔄 How It Works
 
 1. ✨ Create a new list
