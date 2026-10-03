@@ -1,0 +1,1264 @@
+{
+  "id": "catalog-expansion-2026-10",
+  "addedAt": 1790899200,
+  "newCategories": [
+    "aftercare",
+    "communication",
+    "service_ritual"
+  ],
+  "items": [
+    {
+      "category": "aftercare",
+      "id": "water_snacks",
+      "en": "Water and snacks afterwards",
+      "nl": "Water en snacks achteraf",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "cuddling_after",
+      "en": "Cuddling after play",
+      "nl": "Knuffelen na afloop",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "blanket_comfort",
+      "en": "Blankets and comfort afterwards",
+      "nl": "Dekens en geborgenheid achteraf",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "debrief_talk",
+      "en": "Talking through the scene afterwards",
+      "nl": "De sessie achteraf bespreken",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "praise_aftercare",
+      "en": "Praise and reassurance afterwards",
+      "nl": "Lof en geruststelling achteraf",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "quiet_time_together",
+      "en": "Quiet time together afterwards",
+      "nl": "Stille tijd samen achteraf",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "bathing_together_after",
+      "en": "Bathing or showering together afterwards",
+      "nl": "Samen baden of douchen achteraf",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "next_day_check_in",
+      "en": "Checking in the next day",
+      "nl": "De dag erna navragen hoe het ging",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "tending_marks",
+      "en": "Tending to marks and bruises",
+      "nl": "Verzorgen van merktekens",
+      "format": "general"
+    },
+    {
+      "category": "aftercare",
+      "id": "alone_time_after",
+      "en": "Alone time to process afterwards",
+      "nl": "Alleen-tijd om het te verwerken",
+      "format": "general"
+    },
+    {
+      "category": "communication",
+      "id": "safeword_stoplight",
+      "en": "Traffic-light safeword system",
+      "nl": "Stoplicht-systeem voor safewoorden",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "nonverbal_signals",
+      "en": "Non-verbal stop signals",
+      "nl": "Non-verbale stopsignalen",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "mid_scene_check_ins",
+      "en": "Check-ins during a scene",
+      "nl": "Check-ins tijdens een sessie",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "pre_scene_negotiation",
+      "en": "Negotiating a scene in advance",
+      "nl": "Vooraf een sessie onderhandelen",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "hard_limits_talk",
+      "en": "Discussing hard limits",
+      "nl": "Harde grenzen bespreken",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "soft_limits_talk",
+      "en": "Discussing soft limits",
+      "nl": "Zachte grenzen bespreken",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "post_scene_feedback",
+      "en": "Honest feedback after a scene",
+      "nl": "Eerlijke feedback na een sessie",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "limits_revisited",
+      "en": "Revisiting limits over time",
+      "nl": "Grenzen na verloop van tijd herzien",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "explicit_consent_asking",
+      "en": "Explicitly asking for consent",
+      "nl": "Expliciet om toestemming vragen",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "consent_retraction",
+      "en": "Withdrawing consent mid-scene",
+      "nl": "Toestemming onderweg intrekken",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "sexting_consent",
+      "en": "Explicit consent in sexting",
+      "nl": "Expliciete toestemming bij sexting",
+      "format": "role_specific"
+    },
+    {
+      "category": "communication",
+      "id": "shared_wishlist",
+      "en": "Making a shared wishlist together",
+      "nl": "Samen een wensenlijst maken",
+      "format": "general"
+    },
+    {
+      "category": "service_ritual",
+      "id": "daily_collar",
+      "en": "Wearing a collar daily",
+      "nl": "Dagelijks een halsband dragen",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "kneeling_greeting",
+      "en": "Kneeling as a greeting",
+      "nl": "Knielen als begroeting",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "drink_service",
+      "en": "Serving drinks on command",
+      "nl": "Drankjes serveren op commando",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "personal_tasks",
+      "en": "Personal tasks and assignments",
+      "nl": "Persoonlijke taken en opdrachten",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "outfit_approval",
+      "en": "Needing approval for outfits",
+      "nl": "Goedkeuring vragen voor kleding",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "chore_protocol",
+      "en": "Formalized household protocol",
+      "nl": "Vast huishoudprotocol",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "permission_to_speak",
+      "en": "Asking permission to speak",
+      "nl": "Toestemming vragen om te spreken",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "nightly_report",
+      "en": "Reporting back every evening",
+      "nl": "Elke avond verslag doen",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "public_insignia",
+      "en": "Wearing a hidden token in public",
+      "nl": "Onzichtbaar teken dragen buitenshuis",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "ritual_greeting",
+      "en": "A fixed greeting ritual",
+      "nl": "Vast begroetingsritueel",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "service_others_present",
+      "en": "Serving while others are present",
+      "nl": "Serveren terwijl anderen erbij zijn",
+      "format": "role_specific"
+    },
+    {
+      "category": "service_ritual",
+      "id": "ownership_rituals",
+      "en": "Rituals of ownership",
+      "nl": "Rituelen van eigendom",
+      "format": "role_specific"
+    },
+    {
+      "category": "bodies",
+      "id": "tattoos",
+      "en": "Tattoos",
+      "nl": "Tatoeages",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "piercings",
+      "en": "Piercings",
+      "nl": "Piercings",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "muscular_bodies",
+      "en": "Muscular bodies",
+      "nl": "Gespierde lichamen",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "hairy_bodies",
+      "en": "Body hair",
+      "nl": "Lichaamsbeharing",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "smooth_bodies",
+      "en": "Smooth/shaved bodies",
+      "nl": "Gladde/gepiloserde lichamen",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "tall_partners",
+      "en": "Tall partners",
+      "nl": "Lange partners",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "short_partners",
+      "en": "Short partners",
+      "nl": "Kleine partners",
+      "format": "general"
+    },
+    {
+      "category": "bodies",
+      "id": "grey_hair",
+      "en": "Grey hair / silver foxes",
+      "nl": "Grijs haar / zilvervosjes",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "latex_outfits",
+      "en": "Full latex outfits",
+      "nl": "Volledige latex outfits",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "rubber_gear",
+      "en": "Rubber gear",
+      "nl": "Rubberen kleding",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "corsets",
+      "en": "Corsets",
+      "nl": "Korsetten",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "garter_belts",
+      "en": "Garter belts",
+      "nl": "Jarretellen",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "leather_harness_wear",
+      "en": "Wearing leather harnesses",
+      "nl": "Leren harnassen dragen",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "nylon_tights",
+      "en": "Nylon tights and pantyhose",
+      "nl": "Nylonkousen en panty's",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "only_an_apron",
+      "en": "Nothing but an apron",
+      "nl": "Niets dan een schort",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "only_jewelry",
+      "en": "Nothing but jewelry",
+      "nl": "Niets dan sieraden",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "swapped_underwear",
+      "en": "Wearing each other's underwear",
+      "nl": "Elkaars ondergoed dragen",
+      "format": "general"
+    },
+    {
+      "category": "clothing",
+      "id": "business_attire",
+      "en": "Formal business attire",
+      "nl": "Strikt zakelijke kleding",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "deep_kissing",
+      "en": "Deep, passionate kissing",
+      "nl": "Diepe, hartstochtelijke zoenen",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "hair_pulling",
+      "en": "Hair pulling",
+      "nl": "Aan haar trekken",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "marking_hickies",
+      "en": "Leaving hickeys and marks",
+      "nl": "Merktekens en zuigplekken achterlaten",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "ruined_orgasms",
+      "en": "Ruined orgasms",
+      "nl": "Vernielde orgasmes",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "mutual_masturbation",
+      "en": "Mutual masturbation",
+      "nl": "Samen masturberen",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "watching_partner_self",
+      "en": "Watching my partner touch themselves",
+      "nl": "Toezien hoe de partner zichzelf verwent",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "thigh_fucking",
+      "en": "Thigh fucking",
+      "nl": "Vrijen tussen de dijen",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "frottage_grinding",
+      "en": "Frottage and grinding",
+      "nl": "Wrijving en tegen elkaar bewegen",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "nipple_play",
+      "en": "Focused nipple play",
+      "nl": "Gerichte tepelstimulatie",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "breast_worship",
+      "en": "Breast worship",
+      "nl": "Borsten aanbidden",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "finger_sucking",
+      "en": "Sucking fingers",
+      "nl": "Vingers zuigen",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "neck_kissing",
+      "en": "Kissing and nibbling the neck",
+      "nl": "De nek kussen en knabbelen",
+      "format": "general"
+    },
+    {
+      "category": "general",
+      "id": "dirty_whispering",
+      "en": "Whispering dirty things",
+      "nl": "Vuile dingen toefluisteren",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "guided_masturbation",
+      "en": "Instructed masturbation",
+      "nl": "Instructies geven bij masturbatie",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "strip_tease",
+      "en": "Slow strip teases",
+      "nl": "Trage stripteases",
+      "format": "role_specific"
+    },
+    {
+      "category": "general",
+      "id": "kissing_gentle",
+      "en": "Gentle, tender kissing",
+      "nl": "Teder en zacht kussen",
+      "format": "general"
+    },
+    {
+      "category": "ass_play",
+      "id": "anal_fingering",
+      "en": "Anal fingering",
+      "nl": "Anaal vingeren",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "anal_beads",
+      "en": "Anal beads",
+      "nl": "Anaalkralen",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "plug_wearing_public",
+      "en": "Wearing a plug in public",
+      "nl": "Een plug dragen buitenshuis",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "plug_24h",
+      "en": "Long-term plug wearing",
+      "nl": "Langdurig een plug dragen",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "pegging",
+      "en": "Pegging",
+      "nl": "Peggen",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "prostate_massage",
+      "en": "Prostate massage",
+      "nl": "Prostatamassage",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "anal_training",
+      "en": "Gradual anal training",
+      "nl": "Geleidelijke anale training",
+      "format": "role_specific"
+    },
+    {
+      "category": "ass_play",
+      "id": "anal_enema_prep",
+      "en": "Enemas as preparation",
+      "nl": "Klysma's als voorbereiding",
+      "format": "role_specific"
+    },
+    {
+      "category": "restrictive",
+      "id": "shibari_aesthetic",
+      "en": "Aesthetic rope work (shibari)",
+      "nl": "Esthetisch touwwerk (shibari)",
+      "format": "general"
+    },
+    {
+      "category": "restrictive",
+      "id": "rope_harness_daywear",
+      "en": "Wearing a rope harness under clothes",
+      "nl": "Een touwharnas onder kleding dragen",
+      "format": "general"
+    },
+    {
+      "category": "restrictive",
+      "id": "armbinder",
+      "en": "Armbinders",
+      "nl": "Armbinders",
+      "format": "general"
+    },
+    {
+      "category": "restrictive",
+      "id": "mummification_wrap",
+      "en": "Mummification with wrap",
+      "nl": "Inwikkelen met folie/windsels",
+      "format": "general"
+    },
+    {
+      "category": "restrictive",
+      "id": "cage_time",
+      "en": "Time in a cage",
+      "nl": "Tijd in een kooi",
+      "format": "role_specific"
+    },
+    {
+      "category": "restrictive",
+      "id": "furniture_as_restraint",
+      "en": "Tied to furniture",
+      "nl": "Aan meubels vastgebonden",
+      "format": "general"
+    },
+    {
+      "category": "restrictive",
+      "id": "predicament_bondage",
+      "en": "Predicament bondage",
+      "nl": "Predicament-bondage",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "wand_vibrator",
+      "en": "Wand vibrators",
+      "nl": "Wandvibrators",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "vibrating_panties_public",
+      "en": "Remote-controlled toys in public",
+      "nl": "Afstandbaar speelgoed buitenshuis",
+      "format": "role_specific"
+    },
+    {
+      "category": "toys",
+      "id": "electro_estim",
+      "en": "Electrostimulation",
+      "nl": "Elektrostimulatie",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "fucking_machine",
+      "en": "Fucking machines",
+      "nl": "F*ckmachines",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "sybian_ride",
+      "en": "Sybian-style ride machines",
+      "nl": "Sybian-achtige machines",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "suction_toys",
+      "en": "Suction toys for clit/nipples",
+      "nl": "Zuigspeelgoed voor clit/tepels",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "glass_dildos",
+      "en": "Glass dildos",
+      "nl": "Glazen dildo's",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "metal_plugs",
+      "en": "Steel plugs (temperature play)",
+      "nl": "Stalen plugs (temperatuurspel)",
+      "format": "general"
+    },
+    {
+      "category": "toys",
+      "id": "dildo_gag",
+      "en": "Dildo gag for face use",
+      "nl": "Gezichtsgordel met dildo",
+      "format": "role_specific"
+    },
+    {
+      "category": "toys",
+      "id": "double_penetration_toys",
+      "en": "DP with toys on one person",
+      "nl": "DP met speelgoed bij één persoon",
+      "format": "role_specific"
+    },
+    {
+      "category": "toys",
+      "id": "toy_rotation",
+      "en": "A toy box where dom picks",
+      "nl": "Een speelgoedkist waar de dom kiest",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "verbal_commands",
+      "en": "Giving verbal commands",
+      "nl": "Verbale bevelen geven",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "protocol_positions",
+      "en": "Fixed positions (kneel, present)",
+      "nl": "Vaste houdingen (knielen, aanbieden)",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "eye_contact_rules",
+      "en": "Rules about eye contact",
+      "nl": "Regels over oogcontact",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "silent_time_rule",
+      "en": "Periods of required silence",
+      "nl": "Verplichte stilteperiodes",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "orgasm_control",
+      "en": "Controlling when the sub comes",
+      "nl": "Bepalen wanneer de sub klaarkomt",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "orgasm_denial_play",
+      "en": "Denial and teasing",
+      "nl": "Ontneming en plagen",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "chastity_enforcement",
+      "en": "Enforcing chastity",
+      "nl": "Kuisheid afdwingen",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "brat_taming",
+      "en": "Taming brats",
+      "nl": "Bratten temmen",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "instant_obedience",
+      "en": "Expecting instant obedience",
+      "nl": "Onmiddellijke gehoorzaamheid eisen",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "title_usage",
+      "en": "Using titles (Sir, Miss)",
+      "nl": "Titels gebruiken (Sir, Mevrouw)",
+      "format": "role_specific"
+    },
+    {
+      "category": "domination",
+      "id": "public_subtle_control",
+      "en": "Subtle control signals in public",
+      "nl": "Subtiele beheersignalen in het openbaar",
+      "format": "role_specific"
+    },
+    {
+      "category": "no_consent",
+      "id": "cnc_framework",
+      "en": "Consensual non-consent as a frame",
+      "nl": "Consensuele non-consent als kader",
+      "format": "role_specific"
+    },
+    {
+      "category": "no_consent",
+      "id": "resistance_fantasy",
+      "en": "Struggle and resistance play",
+      "nl": "Verzet en tegenstribbelen",
+      "format": "role_specific"
+    },
+    {
+      "category": "no_consent",
+      "id": "pretend_blackmail",
+      "en": "Blackmail fantasy scenes",
+      "nl": "Chantagescenario's (fantasie)",
+      "format": "role_specific"
+    },
+    {
+      "category": "no_consent",
+      "id": "abduction_scene",
+      "en": "Abduction fantasy scenes",
+      "nl": "Ontvoeringsfantasieën (fantasie)",
+      "format": "role_specific"
+    },
+    {
+      "category": "no_consent",
+      "id": "sleeping_partner",
+      "en": "Sleeping-partner fantasy",
+      "nl": "Fantasie over een slapende partner",
+      "format": "role_specific"
+    },
+    {
+      "category": "no_consent",
+      "id": "intruder_scene",
+      "en": "Intruder/home invasion scene",
+      "nl": "Indringerscenario (fantasie)",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "teacher_student",
+      "en": "Teacher/student role-play",
+      "nl": "Leraar/student rollenspel",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "doctor_patient",
+      "en": "Doctor/patient role-play",
+      "nl": "Dokter/patiënt rollenspel",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "priest_confession",
+      "en": "Priest/confession role-play",
+      "nl": "Priester/biecht rollenspel",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "step_family_fantasy",
+      "en": "Step-family role-play (adults, unrelated)",
+      "nl": "Stiefgezin-rollenspel (volwassenen)",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "boss_employee",
+      "en": "Boss/employee role-play",
+      "nl": "Baas/werknemer rollenspel",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "babysitter_fantasy",
+      "en": "Babysitter role-play (adults)",
+      "nl": "Babysitter-rollenspel (volwassenen)",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "stranger_pickup",
+      "en": "Strangers hooking up",
+      "nl": "Vreemden die met elkaar naar bed gaan",
+      "format": "role_specific"
+    },
+    {
+      "category": "taboo",
+      "id": "age_play_adults",
+      "en": "Adult age regression play",
+      "nl": "Leeftijdsregressie onder volwassenen",
+      "format": "role_specific"
+    },
+    {
+      "category": "surrealism",
+      "id": "tentacle_fantasy",
+      "en": "Tentacle fantasies",
+      "nl": "Tentakelfantasieën",
+      "format": "general"
+    },
+    {
+      "category": "surrealism",
+      "id": "monster_lover",
+      "en": "Monster romance scenarios",
+      "nl": "Monsterroman-scenario's",
+      "format": "general"
+    },
+    {
+      "category": "surrealism",
+      "id": "alien_abduction",
+      "en": "Alien abduction play",
+      "nl": "Ontvoering door aliens",
+      "format": "general"
+    },
+    {
+      "category": "surrealism",
+      "id": "giantess_macro",
+      "en": "Size difference (giant/tiny)",
+      "nl": "Grootteverschil (reus/klein)",
+      "format": "general"
+    },
+    {
+      "category": "surrealism",
+      "id": "shrinking_micro",
+      "en": "Shrinking fantasies",
+      "nl": "Krimpfantasieën",
+      "format": "general"
+    },
+    {
+      "category": "fluids",
+      "id": "spit_play",
+      "en": "Spit play",
+      "nl": "Spugen en speeksel",
+      "format": "role_specific"
+    },
+    {
+      "category": "fluids",
+      "id": "golden_shower",
+      "en": "Golden showers",
+      "nl": "Gouden douches",
+      "format": "role_specific"
+    },
+    {
+      "category": "fluids",
+      "id": "tears_from_pain",
+      "en": "Tears during play",
+      "nl": "Tranen tijdens een sessie",
+      "format": "general"
+    },
+    {
+      "category": "fluids",
+      "id": "drool_play",
+      "en": "Drool and gagging",
+      "nl": "Kwijlen en kokhalzen",
+      "format": "role_specific"
+    },
+    {
+      "category": "fluids",
+      "id": "sweat_worship",
+      "en": "Sweat and body scent worship",
+      "nl": "Zweet en lichaamsgeur aanbidden",
+      "format": "general"
+    },
+    {
+      "category": "fluids",
+      "id": "breast_milk",
+      "en": "Lactation and breast milk",
+      "nl": "Lactatie en borstvoeding",
+      "format": "general"
+    },
+    {
+      "category": "fluids",
+      "id": "cum_marks",
+      "en": "Cum as marking",
+      "nl": "Zaad als merkteken",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "name_calling_scene",
+      "en": "Degrading names (negotiated)",
+      "nl": "Vernederende namen (afgesproken)",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "objectification",
+      "en": "Being used as an object",
+      "nl": "Als voorwerp gebruikt worden",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "human_furniture",
+      "en": "Human furniture",
+      "nl": "Menselijk meubel zijn",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "public_humiliation_scene",
+      "en": "Humiliation in front of others",
+      "nl": "Vernedering voor anderen",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "verbal_humiliation_scene",
+      "en": "Verbal humiliation scenes",
+      "nl": "Verbale vernedering",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "small_penis_humiliation",
+      "en": "Small penis humiliation",
+      "nl": "Vernedering om kleine penis",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "body_insults_negotiated",
+      "en": "Insults about the body (negotiated)",
+      "nl": "Beledigingen over het lichaam (afgesproken)",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "degrading_tasks",
+      "en": "Degrading tasks and chores",
+      "nl": "Vernederende taken en klusjes",
+      "format": "role_specific"
+    },
+    {
+      "category": "degradation",
+      "id": "being_ignored",
+      "en": "Being deliberately ignored",
+      "nl": "Bewust genegeerd worden",
+      "format": "general"
+    },
+    {
+      "category": "touch_stimulation",
+      "id": "wax_dripping",
+      "en": "Dripping wax",
+      "nl": "Was druppelen",
+      "format": "role_specific"
+    },
+    {
+      "category": "touch_stimulation",
+      "id": "scratching_back",
+      "en": "Scratching and clawing",
+      "nl": "Krassen en klauwen",
+      "format": "role_specific"
+    },
+    {
+      "category": "touch_stimulation",
+      "id": "tingling_balm",
+      "en": "Tingling balms (mint/ginger)",
+      "nl": "Tintelende balsems (munt/gember)",
+      "format": "role_specific"
+    },
+    {
+      "category": "touch_stimulation",
+      "id": "temperature_contrast",
+      "en": "Contrasting hot and cold",
+      "nl": "Wisselen tussen warm en koud",
+      "format": "role_specific"
+    },
+    {
+      "category": "touch_stimulation",
+      "id": "long_slow_strokes",
+      "en": "Long, slow full-body strokes",
+      "nl": "Langzame strijkingen over het hele lijf",
+      "format": "general"
+    },
+    {
+      "category": "touch_stimulation",
+      "id": "fingertip_teasing",
+      "en": "Fingertip teasing",
+      "nl": "Treiteren met vingertoppen",
+      "format": "role_specific"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "feet_massage",
+      "en": "Feet: massage and touch",
+      "nl": "Voeten: massage en aanraken",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "shoe_worship",
+      "en": "Shoe worship",
+      "nl": "Schoenen aanbidden",
+      "format": "role_specific"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "armpit_play",
+      "en": "Armpits",
+      "nl": "Oksels",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "hands_fetish",
+      "en": "Hands and fingers",
+      "nl": "Handen en vingers",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "glasses_fetish",
+      "en": "Glasses",
+      "nl": "Brillen",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "braces_fetish",
+      "en": "Dental braces",
+      "nl": "Beugels",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "voice_fetish",
+      "en": "Voices, whispering, ASMR",
+      "nl": "Stemmen, gefluister, ASMR",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "loud_moaning",
+      "en": "Loud, uninhibited moaning",
+      "nl": "Luid en ongepotentgierd kreunen",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "body_scent",
+      "en": "Natural body scent",
+      "nl": "Natuurlijke lichaamsgeur",
+      "format": "general"
+    },
+    {
+      "category": "misc_fetish",
+      "id": "belly_touch",
+      "en": "Bellies and soft midsections",
+      "nl": "Buiken en zachte middelen",
+      "format": "general"
+    },
+    {
+      "category": "pain",
+      "id": "single_tail",
+      "en": "Single-tail whips",
+      "nl": "Eénstaartige zwepen",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "paddle_spanking",
+      "en": "Paddles",
+      "nl": "Peddels",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "belt_whipping",
+      "en": "Belts",
+      "nl": "Riemen",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "wooden_spoon",
+      "en": "Wooden spoons",
+      "nl": "Houten lepels",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "chest_slapping",
+      "en": "Chest and breast slapping",
+      "nl": "Op borst en tepels slaan",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "ball_busting",
+      "en": "Ball busting",
+      "nl": "Ballbusting",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "hard_nipple_pinching",
+      "en": "Hard nipple pinching/twisting",
+      "nl": "Stevig tepels knijpen/draaien",
+      "format": "role_specific"
+    },
+    {
+      "category": "pain",
+      "id": "bruise_counting",
+      "en": "Wearing bruises proudly",
+      "nl": "Trots blauwe plekken dragen",
+      "format": "general"
+    },
+    {
+      "category": "medium",
+      "id": "under_mattress_restraints",
+      "en": "Under-mattress restraint kits",
+      "nl": "Restraint-sets onder de matras",
+      "format": "general"
+    },
+    {
+      "category": "medium",
+      "id": "door_frame_restraints",
+      "en": "Door-frame restraints",
+      "nl": "Deurstel-restraints",
+      "format": "general"
+    },
+    {
+      "category": "medium",
+      "id": "wall_mounts",
+      "en": "Wall and ceiling mounts",
+      "nl": "Muur- en plafondbevestigingen",
+      "format": "general"
+    },
+    {
+      "category": "medium",
+      "id": "dining_table_scene",
+      "en": "Everyday furniture as a scene stage",
+      "nl": "Gewone meubels als toneel",
+      "format": "general"
+    },
+    {
+      "category": "time_scale",
+      "id": "quickie_scene",
+      "en": "Short, intense scenes",
+      "nl": "Korte, intense sessies",
+      "format": "general"
+    },
+    {
+      "category": "time_scale",
+      "id": "marathon_sessions",
+      "en": "Multi-hour marathon sessions",
+      "nl": "Urenlange sessies",
+      "format": "general"
+    },
+    {
+      "category": "time_scale",
+      "id": "weekend_scene",
+      "en": "Weekend-long dynamics",
+      "nl": "Dynamiek die een heel weekend duurt",
+      "format": "general"
+    },
+    {
+      "category": "time_scale",
+      "id": "tpe_247",
+      "en": "24/7 total power exchange",
+      "nl": "24/7 totale machtsuitwisseling",
+      "format": "role_specific"
+    },
+    {
+      "category": "time_scale",
+      "id": "denial_weeks",
+      "en": "Denial lasting days or weeks",
+      "nl": "Ontneming die dagen of weken duurt",
+      "format": "role_specific"
+    },
+    {
+      "category": "role_play",
+      "id": "police_arrest",
+      "en": "Police arrest role-play",
+      "nl": "Politie-arrestatie rollenspel",
+      "format": "role_specific"
+    },
+    {
+      "category": "role_play",
+      "id": "interrogation_scene",
+      "en": "Interrogation scene",
+      "nl": "Verhoorscenario",
+      "format": "role_specific"
+    },
+    {
+      "category": "role_play",
+      "id": "dungeon_master",
+      "en": "Dungeon master and captive",
+      "nl": "Meester van de kelder en gevangene",
+      "format": "role_specific"
+    },
+    {
+      "category": "role_play",
+      "id": "photographer_scene",
+      "en": "Photographer and model",
+      "nl": "Fotograaf en model",
+      "format": "role_specific"
+    },
+    {
+      "category": "role_play",
+      "id": "royal_servant",
+      "en": "Royalty and servant",
+      "nl": "Vorst en dienaar",
+      "format": "role_specific"
+    },
+    {
+      "category": "role_play",
+      "id": "vampire_bite",
+      "en": "Vampire biting scenes",
+      "nl": "Vampierbijt-scenario's",
+      "format": "role_specific"
+    }
+  ]
+}

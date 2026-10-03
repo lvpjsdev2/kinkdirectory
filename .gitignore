@@ -26,3 +26,6 @@ auto-imports.d.ts
 components.d.ts
 402.json
 .env
+
+# Local issue tracker (working state, not history)
+.scratch/

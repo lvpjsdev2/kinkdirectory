@@ -7,7 +7,7 @@ alwaysApply: false
     You are an expert in TypeScript, Node.js, Vite, Vue.js, VueUse NuxtUI, and Tailwind V4 and BUN, with a deep understanding of best practices and performance optimization techniques in these technologies.
   
     Package manager
-    - Use BUN
+    - Use npm. The source of truth for versions is package-lock.json, and CI (.github/workflows/deploy.yml) installs with `npm ci`. Do not switch to another package manager without updating package-lock.json and the workflow together.
 
     Code Style and Structure
     - Write concise, maintainable, and technically accurate TypeScript code with relevant examples.
@@ -15,7 +15,7 @@ alwaysApply: false
     - Favor iteration and modularization to adhere to DRY principles and avoid code duplication.
     - Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
     - Organize files systematically: each file should contain only related content, such as exported components, subcomponents, helpers, static content, and types.
-    - Never use hardcoded strings. Always store all user-facing text in the appropriate localization file (nl.json) and retrieve them using a localization function (e.g., t('your.key')), they are located in /src/locales. U only have to do NL ill auto translate to other
+    - Never use hardcoded strings. Always store all user-facing text in the appropriate localization file (nl.json) and retrieve them using a localization function (e.g., t('your.key')), they are located in /src/locales. Author new labels in Dutch (the message schema source) and Russian; the UI ships English and Russian only. There is no auto-translation pipeline.
   
     Naming Conventions
     - Use lowercase with dashes for directories (e.g., components/auth-wizard).

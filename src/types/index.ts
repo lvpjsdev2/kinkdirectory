@@ -58,5 +58,5 @@ export interface KinkList {
   name: string
   role: UserRole
   created: number // timestamp
-  selections: Record<string, KinkChoice> // Format: "categoryId_kinkId_position" -> choice
+  selections: Record<string, KinkChoice> // Format: "<kinkKey>%<position>" -> choice
 }

@@ -11,3 +11,9 @@ Linear uses the default five-label vocabulary. See `docs/agents/triage-labels.md
 ### Domain docs
 
 Domain documentation uses a single-context layout. See `docs/agents/domain.md`.
+
+## Project conventions
+
+Canonical conventions live in `.cursor/rules/kdirectory.mdc` — read it before writing code.
+
+Package manager: **npm**. `package-lock.json` is the source of truth, CI installs with `npm ci`, and the stale "Use BUN" rule has been corrected.
