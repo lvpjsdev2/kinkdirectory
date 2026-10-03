@@ -2,11 +2,11 @@
 
 ### Issue tracker
 
-Issues and specs are tracked as local Markdown under `.scratch/`. See `docs/agents/issue-tracker.md`.
+Issues are tracked in Linear; specs remain in `.scratch/<feature>/` as local working artifacts. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-Triage uses the default five-label vocabulary. See `docs/agents/triage-labels.md`.
+Linear uses the default five-label vocabulary. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
