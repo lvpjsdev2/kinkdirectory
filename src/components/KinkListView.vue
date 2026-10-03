@@ -2,6 +2,7 @@
 import { computed, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useKinkListState } from '../composables/useKinkList'
+import { useListProjection } from '../composables/useListProjection'
 
 import AppFooter from './kinklist/footer/AppFooter.vue'
 // Import the new modular components
@@ -18,7 +19,11 @@ import ViewOnlyBanner from './kinklist/view/ViewOnlyBanner.vue'
 const { t } = useI18n()
 
 // Only need the basic state variables here
-const { activeList, isViewMode, recentlyAddedKinks, newKinksAvailable } = useKinkListState()
+const { activeList, isViewMode } = useKinkListState()
+
+// The New badge and the new-only flow both read the New-plus-unanswered
+// projection instead of a separate New-Kink derivation.
+const { newKinkCount, newKinksAvailable } = useListProjection()
 
 // Check if the current list has any selections (kinks already rated)
 const hasSelections = computed(() => {
@@ -67,13 +72,13 @@ const quizCardRef = useTemplateRef('quizCardRef')
                 <div class="flex items-center gap-2 justify-end md:self-stretch">
                   <!-- New kinks button styled like QuizCard and FilterDropdown -->
                   <button
-                    v-if="recentlyAddedKinks > 0"
+                    v-if="newKinkCount > 0"
                     class="h-full bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-2 transition-all duration-200 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-center flex-none md:flex md:items-center"
                     @click="(newKinksAvailable && !isViewMode) ? quizCardRef?.openQuizModal?.() : null"
                   >
                     <div class="flex items-center gap-1.5">
                       <UIcon name="i-lucide-star" class="text-pink-600 dark:text-pink-400 flex-shrink-0 text-sm" />
-                      <span class="text-xs font-medium text-pink-600 dark:text-pink-400">{{ recentlyAddedKinks }} {{ t('app.new') }}</span>
+                      <span class="text-xs font-medium text-pink-600 dark:text-pink-400">{{ newKinkCount }} {{ t('app.new') }}</span>
                     </div>
                   </button>
 

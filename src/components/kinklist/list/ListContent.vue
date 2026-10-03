@@ -2,60 +2,26 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useKinkListState } from '../../../composables/useKinkList'
-import { kinkList } from '../../../data/kinks'
+import { useListProjection } from '../../../composables/useListProjection'
 import KinkSection from '../../kinklist/kink/KinkSection.vue'
 
 const { t } = useI18n()
 const {
   activeList,
-  isKinkVisibleForRole,
   kinkModalState,
   closeKinkModal,
-  shouldShowKink,
   filters,
   hasActiveFilters,
   clearAllFilters,
-  getVisibleKinksForQuiz,
-  getKinkChoice,
 } = useKinkListState()
 
-// Filter categories to only show those with visible kinks
-const visibleCategories = computed(() => {
-  if (!activeList.value)
-    return []
+// The screen renders exactly the Category groups the projection produced, and
+// Progress comes from the same projection. A Category with no visible rows is
+// already omitted upstream, and filters were applied per Position row, so no
+// Kink is re-expanded or re-filtered here.
+const { screen, progress } = useListProjection()
 
-  return kinkList.filter((category) => {
-    // Check if any kink in this category is visible for the current role
-    // and passes the active filters
-    return category.kinks.some(kink =>
-      isKinkVisibleForRole(kink, activeList.value!.role) && shouldShowKink(kink),
-    )
-  })
-})
-
-// Calculate progress
-const progress = computed(() => {
-  if (!activeList.value)
-    return { completed: 0, total: 0, percentage: 0 }
-
-  const allKinks = getVisibleKinksForQuiz()
-  let completed = 0
-  let total = 0
-
-  allKinks.forEach((item) => {
-    item.positions.forEach((position) => {
-      total++
-      if (getKinkChoice(item.kink, position) !== 0)
-        completed++
-    })
-  })
-
-  return {
-    completed,
-    total,
-    percentage: total > 0 ? Math.round((completed / total) * 100) : 0,
-  }
-})
+const visibleCategories = computed(() => screen.value.categories)
 </script>
 
 <template>
@@ -126,16 +92,17 @@ const progress = computed(() => {
 
       <!-- Masonry-style layout for better space filling -->
       <div v-else class="columns-1 md:columns-2 xl:columns-3 gap-6 space-y-6">
-        <div v-for="category in visibleCategories" :key="category.id" class="category-container inline-block w-full mb-2">
+        <div
+          v-for="category in visibleCategories"
+          :key="category.categoryId"
+          class="category-container inline-block w-full mb-2"
+        >
           <h2 class="text-base font-bold mb-1.5 pb-1.5 border-b-1 border-gray-200 dark:border-gray-700">
-            {{ t(`categories.${category.id}`) }}
+            {{ t(`categories.${category.categoryId}`) }}
           </h2>
 
           <!-- Kinks section -->
-          <KinkSection
-            :category-id="category.id"
-            :kinks="category.kinks.filter(kink => shouldShowKink(kink) && isKinkVisibleForRole(kink, activeList?.role || 'both'))"
-          />
+          <KinkSection :category="category" />
         </div>
       </div>
     </div>
