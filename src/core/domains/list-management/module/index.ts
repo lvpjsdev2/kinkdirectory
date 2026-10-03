@@ -8,12 +8,6 @@ import {
   ListUpdatedEvent,
   SelectionChangedEvent,
 } from '../events'
-import {
-  FilterProjection,
-  ListReadModel,
-  QuizProjection,
-  ShareProjection,
-} from '../projections/ListProjections'
 import { LIST_REPOSITORY_TOKEN } from '../repositories/IListRepository'
 import { LocalStorageListRepository } from '../repositories/LocalStorageListRepository'
 import { DOMAIN_EVENT_BUS_TOKEN, InMemoryDomainEventBus } from '../services/DomainEventBus'
@@ -44,12 +38,10 @@ export const listManagementModule = {
     { provide: LIST_REPOSITORY_TOKEN, useClass: LocalStorageListRepository },
   ],
 
-  projections: [
-    ListReadModel,
-    QuizProjection,
-    FilterProjection,
-    ShareProjection,
-  ],
+  // No projections are registered here: the read side of a List is the one pure
+  // projection in src/projection (ADR-0001/0002), and the screen, the Quiz and
+  // the export surface are all adapters over that single seam. This module wires
+  // writes, persistence and events.
 
   events: [
     DomainEvent,
@@ -63,7 +55,6 @@ export const listManagementModule = {
 export { DOMAIN_EVENT_BUS_TOKEN }
 export type {
   DomainEvent,
-  FilterProjection,
   IDomainEventBus,
   IListRepository,
   List,
@@ -72,11 +63,8 @@ export type {
   ListId,
   ListManagementService,
   ListName,
-  ListReadModel,
   ListUpdatedEvent,
-  QuizProjection,
   Selection,
   SelectionChangedEvent,
-  ShareProjection,
   UserRole,
 }

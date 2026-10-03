@@ -1,8 +1,7 @@
-import type { KinkChoice, KinkDefinition, KinkList, KinkPosition, RolePerspective, UserRole } from '../types'
+import type { KinkChoice, KinkDefinition, KinkList, KinkPosition, UserRole } from '../types'
 import { createGlobalState, useStorage } from '@vueuse/core'
 import { nanoid } from 'nanoid'
 import { computed, ref } from 'vue'
-import { kinkList } from '../data/kinks'
 import {
   createKinkMappings,
   CURRENT_VERSION,
@@ -11,6 +10,12 @@ import {
   POSITION_MAP,
   POSITION_NAMES,
 } from './useKinkListMigration'
+
+// This module owns the write side of a List: the stored lists, the Display-filter
+// state the projection is handed, the Choice writes, persistence and the URL
+// formats. It owns no read rules: which Positions a List answers for, whether a
+// Kink is New, how Progress is measured and what the Quiz traverses all belong to
+// the one pure projection in src/projection (ADR-0001, ADR-0002).
 
 // Role numeric mapping (single source of truth)
 const ROLE_MAP: Record<string, number> = {
@@ -21,24 +26,6 @@ const ROLE_MAP: Record<string, number> = {
 
 // Role names in order (for decoding)
 const ROLE_NAMES = ['both', 'dom', 'sub']
-
-// A position names the partner slot a rating is about. The allowedPerspectives
-// entry it requires is fixed: it does not depend on which role the list answers for.
-type KinkSlot = Exclude<KinkPosition, 'general'>
-
-const POSITION_TARGET: Record<KinkSlot, RolePerspective> = {
-  as_dom: { role: 'dom', perspective: 'self' },
-  for_sub: { role: 'dom', perspective: 'partner' },
-  as_sub: { role: 'sub', perspective: 'self' },
-  for_dom: { role: 'sub', perspective: 'partner' },
-}
-
-// A 'both' list is a switch: it answers as a dom and as a sub, so it carries all four.
-const LIST_POSITIONS: Record<UserRole, KinkSlot[]> = {
-  dom: ['as_dom', 'for_sub'],
-  sub: ['as_sub', 'for_dom'],
-  both: ['as_dom', 'for_sub', 'as_sub', 'for_dom'],
-}
 
 export const useKinkListState = createGlobalState(() => {
   // Create kink mappings for old to new format
@@ -79,83 +66,6 @@ export const useKinkListState = createGlobalState(() => {
       return null
     return kinkLists.value.find(list => list.id === activeListId.value) || null
   })
-
-  // A kink is new for a list when it entered the catalog after that list was
-  // created, never on a calendar window — see docs/adr/0002. `addedAt` is stored
-  // in seconds, `created` in milliseconds, hence the conversion.
-  function isKinkNew(addedAt: number | undefined, list: KinkList | null = activeList.value): boolean {
-    if (!list || !addedAt)
-      return false
-    return addedAt * 1000 > list.created
-  }
-
-  function countNewKinksForList(list: KinkList | null): number {
-    if (!list)
-      return 0
-    let count = 0
-    for (const category of kinkList) {
-      for (const kink of category.kinks) {
-        if (isKinkNew(kink.addedAt, list))
-          count++
-      }
-    }
-    return count
-  }
-
-  const recentlyAddedKinks = computed(() => countNewKinksForList(activeList.value))
-
-  // Count of new unfilled positions (not just kinks)
-  const newUnfilledPositionsCount = computed(() => {
-    const allAvailableKinks = getVisibleKinksForQuiz()
-
-    // Count all unfilled positions in new kinks
-    let totalUnfilled = 0
-
-    allAvailableKinks.forEach((item) => {
-      // Only count positions for kinks this list has not seen yet
-      if (isKinkNew(item.kink.addedAt)) {
-        // Count each unfilled position
-        item.positions.forEach((position) => {
-          const value = getKinkChoice(item.kink, position)
-          if (value === 0) {
-            totalUnfilled++
-          }
-        })
-      }
-    })
-
-    return totalUnfilled
-  })
-
-  const newKinksAvailable = computed(() => newUnfilledPositionsCount.value > 0)
-
-  // The positions a list answers for, in display order. A kink is visible when at
-  // least one position applies, so visibility and positions can never disagree.
-  function getKinkPositions(kink: KinkDefinition, userRole: UserRole): KinkPosition[] {
-    if (kink.format === 'general')
-      return ['general'] // General kinks are answered once, role-independent
-
-    if (kink.format !== 'role_specific' || !kink.allowedPerspectives)
-      return []
-
-    const positions = LIST_POSITIONS[userRole].filter((position) => {
-      const target = POSITION_TARGET[position]
-      return kink.allowedPerspectives!.some(
-        allowed => allowed.role === target.role && allowed.perspective === target.perspective,
-      )
-    })
-
-    if (positions.length === 0) {
-      console.warn(`No positions found for kink ${kink.id} (key: ${kink.key}) with role ${userRole}`, kink.allowedPerspectives)
-    }
-
-    return positions
-  }
-
-  // Function to determine if a kink should be visible based on user role
-  function isKinkVisibleForRole(kink: KinkDefinition, userRole: UserRole): boolean {
-    return getKinkPositions(kink, userRole).length > 0
-  }
 
   function createList(name: string, role: UserRole): string {
     const id = nanoid(8)
@@ -501,77 +411,6 @@ export const useKinkListState = createGlobalState(() => {
     }
   }
 
-  // Get all visible kinks for quiz mode in a flat structure
-  function getVisibleKinksForQuiz(): Array<{ categoryId: string, kink: KinkDefinition, positions: KinkPosition[] }> {
-    if (!activeList.value)
-      return []
-
-    const allKinks: Array<{ categoryId: string, kink: KinkDefinition, positions: KinkPosition[] }> = []
-
-    // Get categories with type assertion to ensure TypeScript knows the structure
-
-    // Loop through all categories and kinks to find visible ones
-    for (const category of kinkList) {
-      for (const kink of category.kinks) {
-        if (isKinkVisibleForRole(kink, activeList.value.role)) {
-          const positions = getKinkPositions(kink, activeList.value.role)
-          if (positions.length > 0) {
-            allKinks.push({
-              categoryId: category.id,
-              kink,
-              positions,
-            })
-          }
-        }
-      }
-    }
-
-    return allKinks
-  }
-
-  // Check if a kink should be shown based on applied filters
-  function shouldShowKink(kink: KinkDefinition): boolean {
-    // No active filters means show everything
-    if (!filters.value.showOnlyNew && !filters.value.showOnlyUnfilled && filters.value.choiceFilters.length === 0) {
-      return true
-    }
-
-    let shouldShow = true
-
-    // Apply "only new" filter if enabled
-    if (filters.value.showOnlyNew) {
-      shouldShow = shouldShow && isKinkNew(kink.addedAt)
-    }
-
-    // Apply "only unfilled" filter if enabled
-    if (filters.value.showOnlyUnfilled && activeList.value) {
-      // Get the positions for this kink
-      const positions = getKinkPositions(kink, activeList.value.role)
-
-      // Check if any positions are unfilled (rating = 0)
-      const hasUnfilledPositions = positions.some(position =>
-        getKinkChoice(kink, position) === 0,
-      )
-
-      shouldShow = shouldShow && hasUnfilledPositions
-    }
-
-    // Apply choice filters if any are selected
-    if (filters.value.choiceFilters.length > 0 && activeList.value) {
-      const positions = getKinkPositions(kink, activeList.value.role)
-
-      // Check if any position has a choice that matches the filters
-      const hasMatchingChoice = positions.some((position) => {
-        const choice = getKinkChoice(kink, position)
-        return filters.value.choiceFilters.includes(choice)
-      })
-
-      shouldShow = shouldShow && hasMatchingChoice
-    }
-
-    return shouldShow
-  }
-
   // Check if any filters are active
   const hasActiveFilters = computed(() =>
     filters.value.showOnlyNew
@@ -610,13 +449,8 @@ export const useKinkListState = createGlobalState(() => {
     isViewMode,
     kinkModalState,
     filters,
-    isKinkVisibleForRole,
-    getKinkPositions,
     createList,
     deleteList,
-    recentlyAddedKinks,
-    isKinkNew,
-    countNewKinksForList,
     updateList,
     setKinkChoice,
     getKinkChoice,
@@ -626,11 +460,7 @@ export const useKinkListState = createGlobalState(() => {
     importViewedList,
     exitViewMode,
     openKinkModal,
-    newUnfilledPositionsCount,
-    newKinksAvailable,
     closeKinkModal,
-    getVisibleKinksForQuiz,
-    shouldShowKink,
     hasActiveFilters,
     activeFilterCount,
     clearChoiceFilters,
