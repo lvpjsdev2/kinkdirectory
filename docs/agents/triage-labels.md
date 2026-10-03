@@ -11,9 +11,7 @@ roles to the desired label strings in Linear.
 | `ready-for-human`          | `ready-for-human`    | Requires human implementation |
 | `wontfix`                  | `wontfix`             | Will not be actioned |
 
-The current `Lvpjsdev` team has only `Improvement`, `Feature`, and `Bug`
-labels. Until the canonical labels are provisioned, fully specified tickets
-use Linear's `Todo` state and the `Improvement` label.
+The canonical triage labels are provisioned for the `Lvpjsdev` team and may be
+applied directly to Linear issues.
 
-When a skill mentions a role, use the corresponding canonical label once it is
-available in Linear.
+When a skill mentions a role, use the corresponding canonical label string.

@@ -16,9 +16,7 @@ ownership, labels, parent/child relationships, and blocking relations.
 - Use native Linear `blocks` / `blocked by` relations for ticket dependencies.
 - Use the team's existing Linear workflow states. Do not invent repository-local
   status names when Linear already provides an equivalent.
-- Apply `ready-for-agent` when that Linear label is provisioned. Until then,
-  use the `Todo` state and the team's existing work-type label for fully
-  specified tickets.
+- Apply `ready-for-agent` to fully specified implementation tickets.
 - Comments, implementation progress, PR links, and completion notes belong on
   the corresponding Linear issue.
 - `.scratch/` may contain local specs, handoffs, and cached ticket material, but
