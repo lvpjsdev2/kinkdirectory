@@ -19,7 +19,7 @@ const {
   setKinkChoice,
   getKinkChoice,
   newUnfilledPositionsCount,
-  newKinksAvailable,
+  newKinksAvailable
 } = useKinkListState()
 const { kinkChoiceOrder, settings } = useSettings()
 
@@ -33,9 +33,6 @@ const hasStarted = ref(false)
 const isNewKinksOnly = ref(false)
 // Track quiz history for back button functionality
 const quizHistory = ref<Array<{ kinkIndex: number, positionIndex: number, value: KinkChoiceType }>>([])
-
-// Check for new kinks (added in the last 2 days)
-const twoDaysAgo = Math.floor(Date.now() / 1000) - (2 * 24 * 60 * 60)
 
 // Active color classes (selected)
 const activeColorClasses = {

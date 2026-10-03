@@ -271,10 +271,6 @@
     }
   },
   "general": {
-    "romance_affection": {
-      "label": "Romance / Affection",
-      "tooltip": "Displaying or expressing love or strong affection, passion, either during love making or during normal scenes."
-    },
     "handjob_fingering": {
       "label": "Handjob / Fingering",
       "tooltip": "Sexual stimulation by direct, physical contact of the hands or fingers to the genitals."
@@ -325,7 +321,7 @@
       "label": "Rimming",
       "tooltip": "The act of giving oral stimulation to a partner's anus, by the means of licking and/or penetrating the recipient's anus with the tongue."
     },
-    "double_penetration": {
+    "anal_double_penetration": {
       "label": "Double penetration",
       "tooltip": "The act of penetrating a single character's anus with two objects, including but not limited to the penis, sex toys, fist etc., or receiving such."
     },
@@ -450,22 +446,6 @@
     "sleep_sack": {
       "label": "Sleeping bag",
       "tooltip": "A special tight bag in which the entire body is enclosed, similar to mummification."
-    },
-    "dom_only_for_sub": {
-      "label": "Dom-only for sub",
-      "tooltip": "Example: Dominant can only answer for their submissive, not for themselves."
-    },
-    "sub_self_only": {
-      "label": "Sub self only",
-      "tooltip": "Example: Submissive can only answer for themselves, not for their dominant."
-    },
-    "dom_answer_for_both": {
-      "label": "Dom answers both",
-      "tooltip": "Example: Dominant answers for both themselves and their submissive."
-    },
-    "sub_only_for_dom": {
-      "label": "Sub only for dom",
-      "tooltip": "Example: Submissive can only answer for their dominant, not for themselves."
     }
   },
   "toys": {
@@ -487,10 +467,6 @@
     }
   },
   "domination": {
-    "general_dom_sub": {
-      "label": "General Dom / General Sub",
-      "tooltip": "Catchall for Dominant/Submissive Activities."
-    },
     "domestic_servitude": {
       "label": "Domestic servitude",
       "tooltip": "Being served by a butler, waitress, chauffeur, maid or housekeeper, or serving as one."
@@ -519,10 +495,6 @@
       "label": "Forced orgasm",
       "tooltip": "A forced orgasm is consensual BDSM or kinky sexual play whereby a person consents to be forced to orgasm in a way that is beyond their control."
     },
-    "orgasm_control": {
-      "label": "Orgasm control",
-      "tooltip": "Refers to the dominant being in control of when the submissive achieves orgasm, either by physical means or by command; typically involves domination and/or excessive teasing and edging; orgasm may be completely denied."
-    },
     "orgasm_denial": {
       "label": "Orgasm denial",
       "tooltip": "Refers to the dominant denying the submissive orgasm."
@@ -534,10 +506,6 @@
     "orgasm_training": {
       "label": "Orgasm training",
       "tooltip": "Training a submissive to come on command, or to come only with the dominant's permission."
-    },
-    "power_exchange": {
-      "label": "Power exchange",
-      "tooltip": "A relationship with service at the core."
     },
     "verbal_praise": {
       "label": "Verbal praise",

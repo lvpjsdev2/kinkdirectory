@@ -15,19 +15,7 @@ const preferredLanguages = usePreferredLanguages()
 function getLanguageIcon(locale: string) {
   switch (locale) {
     case 'en': return 'twemoji:flag-united-kingdom'
-    case 'nl': return 'twemoji:flag-netherlands'
-    case 'es': return 'twemoji:flag-spain'
-    case 'fr': return 'twemoji:flag-france'
-    case 'de': return 'twemoji:flag-germany'
-    case 'it': return 'twemoji:flag-italy'
-    case 'pt': return 'twemoji:flag-portugal'
     case 'ru': return 'twemoji:flag-russia'
-    case 'zh': return 'twemoji:flag-china'
-    case 'ja': return 'twemoji:flag-japan'
-    case 'ko': return 'twemoji:flag-south-korea'
-    case 'ar': return 'twemoji:flag-saudi-arabia'
-    case 'hi': return 'twemoji:flag-india'
-    case 'hu': return 'twemoji:flag-hungary'
     default: return 'i-lucide-globe'
   }
 }
@@ -36,19 +24,7 @@ function getLanguageIcon(locale: string) {
 function getNativeLanguageName(locale: string) {
   switch (locale) {
     case 'en': return 'English'
-    case 'nl': return 'Nederlands'
-    case 'es': return 'Español'
-    case 'fr': return 'Français'
-    case 'de': return 'Deutsch'
-    case 'it': return 'Italiano'
-    case 'pt': return 'Português'
     case 'ru': return 'Русский'
-    case 'zh': return '中文'
-    case 'ja': return '日本語'
-    case 'ko': return '한국어'
-    case 'ar': return 'العربية'
-    case 'hi': return 'हिन्दी'
-    case 'hu': return 'Magyar'
     default: return locale
   }
 }

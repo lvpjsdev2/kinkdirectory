@@ -10,16 +10,11 @@ const props = defineProps<{
   positionLabel?: string
 }>()
 
-const { openKinkModal } = useKinkListState()
+const { openKinkModal, isKinkNew } = useKinkListState()
 const { t } = useI18n()
 
-// Check if kink was added within the last 2 days
-const isNewKink = computed(() => {
-  if (!props.addedAt)
-    return false
-  const twoDaysAgo = Math.floor(Date.now() / 1000) - (2 * 24 * 60 * 60)
-  return props.addedAt > twoDaysAgo
-})
+// New means "the active list had not seen this kink yet", not "recently added"
+const isNewKink = computed(() => isKinkNew(props.addedAt))
 
 function handleClick() {
   openKinkModal(props.label, props.tooltip)

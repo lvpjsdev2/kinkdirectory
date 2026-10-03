@@ -268,10 +268,6 @@
     }
   },
   "general": {
-    "romance_affection": {
-      "label": "Romantiek / Affectie",
-      "tooltip": "Het tonen of uiten van liefde of sterke genegenheid, passie, zowel tijdens het vrijen als tijdens normale scènes."
-    },
     "handjob_fingering": {
       "label": "Handjob / Vingeren",
       "tooltip": "Seksuele stimulatie door direct, fysiek contact van de handen of vingers met de geslachtsdelen."
@@ -322,7 +318,7 @@
       "label": "Rimming",
       "tooltip": "Het geven van orale stimulatie aan de anus van een partner, door middel van likken en/of het penetreren van de anus van de ontvanger met de tong."
     },
-    "double_penetration": {
+    "anal_double_penetration": {
       "label": "Dubbele penetratie",
       "tooltip": "Het penetreren van de anus van een enkel personage met twee objecten, waaronder maar niet beperkt tot de penis, seksspeeltjes, vuist enz., of het ontvangen hiervan."
     },
@@ -447,22 +443,6 @@
     "sleep_sack": {
       "label": "Slaapzak",
       "tooltip": "Een speciale strakke zak waarin het hele lichaam wordt opgesloten, vergelijkbaar met mummificatie."
-    },
-    "dom_only_for_sub": {
-      "label": "Dom alleen voor sub",
-      "tooltip": "Voorbeeld: Dominant kan alleen antwoorden voor hun onderdanige, niet voor zichzelf."
-    },
-    "sub_self_only": {
-      "label": "Sub alleen zelf",
-      "tooltip": "Voorbeeld: Onderdanige kan alleen voor zichzelf antwoorden, niet voor hun dominant."
-    },
-    "dom_answer_for_both": {
-      "label": "Dom antwoordt voor beiden",
-      "tooltip": "Voorbeeld: Dominant antwoordt voor zowel zichzelf als hun onderdanige."
-    },
-    "sub_only_for_dom": {
-      "label": "Sub alleen voor dom",
-      "tooltip": "Voorbeeld: Onderdanige kan alleen antwoorden voor hun dominant, niet voor zichzelf."
     }
   },
   "toys": {
@@ -484,10 +464,6 @@
     }
   },
   "domination": {
-    "general_dom_sub": {
-      "label": "Algemeen Dom / Algemeen Sub",
-      "tooltip": "Verzamelnaam voor Dominante/Onderdanige Activiteiten."
-    },
     "domestic_servitude": {
       "label": "Huishoudelijke dienstbaarheid",
       "tooltip": "Bediend worden door een butler, serveerster, chauffeur, dienstmeisje of huishoudster, of als zodanig dienen."
@@ -516,10 +492,6 @@
       "label": "Gedwongen orgasme",
       "tooltip": "Een gedwongen orgasme is consensueel BDSM of kinky seksueel spel waarbij een persoon instemt om gedwongen te worden tot een orgasme op een manier die buiten hun controle ligt."
     },
-    "orgasm_control": {
-      "label": "Orgasme controle",
-      "tooltip": "Verwijst naar de dominant die controle heeft over wanneer de onderdanige een orgasme bereikt, hetzij door fysieke middelen of door commando; impliceert meestal dominantie en/of excessief plagen en edging; orgasme kan volledig worden ontzegd."
-    },
     "orgasm_denial": {
       "label": "Orgasme onthouding",
       "tooltip": "Verwijst naar de dominant die de onderdanige een orgasme ontzegt."
@@ -539,10 +511,6 @@
     "physical_praise": {
       "label": "Fysieke lof",
       "tooltip": "Het gebruik van aanrakingen, knuffels, strelen of andere fysieke gebaren om waardering en goedkeuring te tonen aan een onderdanige."
-    },
-    "power_exchange": {
-      "label": "Machtsuitwisseling",
-      "tooltip": "Een relatie met dienstverlening als kern."
     }
   },
   "no_consent": {
