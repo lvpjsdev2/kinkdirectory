@@ -1,5 +1,6 @@
 import type { KinkCategory, KinkList } from '../types'
-import type { ProjectedRow, ProjectionFilters } from './types'
+import type { ProjectedRow } from './types'
+import { NEW_ONLY_FILTERS, NO_DISPLAY_FILTERS } from './filters'
 import { projectList } from './projectList'
 
 // The Quiz is an adapter over the one List projection, not a second read-side
@@ -19,13 +20,9 @@ export interface QuizProjectionInput {
 // filter together, with Choice filters inactive.
 export type QuizScope = 'all' | 'newAndUnanswered'
 
-const SCOPE_FILTERS: Record<QuizScope, ProjectionFilters> = {
-  all: { showOnlyNew: false, showOnlyUnfilled: false, choiceFilters: [] },
-  newAndUnanswered: { showOnlyNew: true, showOnlyUnfilled: true, choiceFilters: [] },
-}
-
 // The flat Position-row sequence the Quiz traverses with a single cursor, in
 // catalogue and canonical Position order.
 export function projectQuizRows(input: QuizProjectionInput, scope: QuizScope): ProjectedRow[] {
-  return projectList({ ...input, filters: SCOPE_FILTERS[scope] }).rows
+  const filters = scope === 'all' ? NO_DISPLAY_FILTERS : NEW_ONLY_FILTERS
+  return projectList({ ...input, filters }).rows
 }

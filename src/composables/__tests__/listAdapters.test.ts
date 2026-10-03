@@ -1,10 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
 import { category, CREATED_S, filters, generalKink, list, NOW_S, roleSpecificKink } from '../../projection/__tests__/fixtures'
+import { NEW_ONLY_FILTERS, NO_DISPLAY_FILTERS } from '../../projection/filters'
 import {
   countNewKinks,
   currentUnixSeconds,
-  NEW_ONLY_FILTERS,
-  NO_DISPLAY_FILTERS,
   projectAll,
   projectNewKinks,
   projectScreen,

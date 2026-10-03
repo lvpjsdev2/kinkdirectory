@@ -1,6 +1,6 @@
 import type { KinkChoice } from '../../../types'
-import { ref } from 'vue'
 import { describe, expect, it } from 'vitest'
+import { ref } from 'vue'
 import { category, generalKink, list, NOW_S } from '../../../projection/__tests__/fixtures'
 import { projectQuizRows } from '../../../projection/quiz'
 import { useQuizSession } from './quizSession'
