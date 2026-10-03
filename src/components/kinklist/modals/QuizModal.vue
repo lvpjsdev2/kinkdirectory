@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { ProjectedRow } from '../../../projection/types'
 import type { KinkChoice as KinkChoiceType } from '../../../types'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getDisplayValue } from '../../../composables/kink.helpers'
+import { currentUnixSeconds } from '../../../composables/listAdapters'
 import { useKinkListState } from '../../../composables/useKinkList'
 import { useSettings } from '../../../composables/useSettings'
 import { kinkList } from '../../../data/kinks'
 import { projectQuizRows } from '../../../projection/quiz'
 import { KINK_POSITION_DISPLAY } from '../../../types'
+import { useQuizSession } from './quizSession'
 
 defineProps<{
   listId: string
@@ -19,21 +20,43 @@ const emit = defineEmits<{
 const { t } = useI18n()
 const {
   activeList,
+  getKinkChoice,
   setKinkChoice,
 } = useKinkListState()
 const { kinkChoiceOrder, settings } = useSettings()
 
-// Quiz state variables. The quiz traverses the flat projected Position-row
-// sequence with a single cursor; it holds no Position or New knowledge of its
-// own.
-const quizRows = ref<ProjectedRow[]>([])
-const cursor = ref(0)
-const quizCompleted = ref(false)
-const hasStarted = ref(false)
-// Track if we're only quizzing new kinks
-const isNewKinksOnly = ref(false)
-// Cursors already visited, so the back button returns to the previous question
-const visitedCursors = ref<number[]>([])
+// The quiz traverses the flat projected Position-row sequence with a single
+// cursor; the session holds that state and reads the highlighted rating from the
+// active List, which stays the single owner of Choice reads and writes.
+const {
+  hasStarted,
+  isNewKinksOnly,
+  completed: quizCompleted,
+  currentRow,
+  currentValue,
+  totalPositions,
+  currentPositionNumber,
+  progress,
+  newOnlyQuestionCount: newQuizQuestionCount,
+  newOnlyAvailable: newKinksAvailable,
+  canGoBack,
+  startQuiz,
+  startNewKinksQuiz,
+  answer,
+  next: nextQuestion,
+  back: previousQuestion,
+} = useQuizSession({
+  allRows: () => projectQuizRows(
+    { catalogue: kinkList, list: activeList.value, now: currentUnixSeconds() },
+    'all',
+  ),
+  newOnlyRows: () => projectQuizRows(
+    { catalogue: kinkList, list: activeList.value, now: currentUnixSeconds() },
+    'newAndUnanswered',
+  ),
+  readChoice: getKinkChoice,
+  writeChoice: setKinkChoice,
+})
 
 // Active color classes (selected)
 const activeColorClasses = {
@@ -63,25 +86,8 @@ const quizValues = computed(() => {
   return [...reversedOrder, 0] as KinkChoiceType[]
 })
 
-// Get the current projected row, and the Kink and Position it names
-const currentRow = computed(() => quizRows.value[cursor.value] ?? null)
-
-const currentKink = computed(() => currentRow.value?.kink ?? null)
-
+// Get the Position the current row names
 const currentPosition = computed(() => currentRow.value?.position ?? null)
-
-const totalPositions = computed(() => quizRows.value.length)
-
-// The current question number, clamped to the sequence length
-const currentPositionNumber = computed(() => Math.min(cursor.value + 1, totalPositions.value))
-
-// Calculate progress as a percentage
-const progress = computed(() => {
-  if (totalPositions.value === 0)
-    return 0
-
-  return Math.round(cursor.value / totalPositions.value * 100)
-})
 
 // Get description text for a rating value
 function getRatingDescription(rating: KinkChoiceType): string {
@@ -102,10 +108,6 @@ function getRatingDescription(rating: KinkChoiceType): string {
   return t('choices.favorite')
 }
 
-// Get the currently selected value for the current kink and position. The
-// projected row already carries it, so the quiz never resolves it a second way.
-const currentValue = computed((): KinkChoiceType => currentRow.value?.choice ?? 0)
-
 // Position wording is shared with the list table so a position is named the
 // same way everywhere. See KINK_POSITION_DISPLAY.
 const positionDisplay = computed(() =>
@@ -123,78 +125,14 @@ function triggerHapticFeedback() {
 
 // Handle user selecting a rating
 function handleSelect(rating: KinkChoiceType) {
-  if (!currentKink.value || !currentPosition.value)
+  if (!currentRow.value)
     return
 
   // Provide haptic feedback on mobile
   triggerHapticFeedback()
 
-  // Save the selection. List state still owns the write.
-  setKinkChoice(
-    currentKink.value,
-    currentPosition.value,
-    rating,
-  )
-
-  // Move to next question immediately
-  nextQuestion()
-}
-
-// Move to the next question
-function nextQuestion() {
-  if (!currentRow.value)
-    return
-
-  visitedCursors.value.push(cursor.value)
-  cursor.value++
-
-  // Check if we've completed all questions
-  if (cursor.value >= quizRows.value.length) {
-    quizCompleted.value = true
-  }
-}
-
-// Go back to the previous question
-function previousQuestion() {
-  const previous = visitedCursors.value.pop()
-  if (previous === undefined)
-    return
-
-  cursor.value = previous
-
-  // If we went back from completed state, ensure it's not marked completed
-  if (quizCompleted.value) {
-    quizCompleted.value = false
-  }
-}
-
-// The new-only quiz is available when its own projection holds a question. The
-// count comes from the same projection, so the badge can never disagree with it.
-const newQuizRows = computed(() =>
-  projectQuizRows({ catalogue: kinkList, list: activeList.value }, 'newAndUnanswered'),
-)
-const newQuizQuestionCount = computed(() => newQuizRows.value.length)
-const newKinksAvailable = computed(() => newQuizQuestionCount.value > 0)
-
-// Start the quiz
-function startQuiz() {
-  quizRows.value = projectQuizRows({ catalogue: kinkList, list: activeList.value }, 'all')
-  hasStarted.value = true
-  isNewKinksOnly.value = false
-  cursor.value = 0
-  quizCompleted.value = quizRows.value.length === 0
-  visitedCursors.value = []
-}
-
-// Start quiz with only new kinks
-function startNewKinksQuiz() {
-  quizRows.value = newQuizRows.value
-  hasStarted.value = true
-  isNewKinksOnly.value = true
-  cursor.value = 0
-  // With no matching question the quiz is already over
-  quizCompleted.value = quizRows.value.length === 0
-  visitedCursors.value = []
+  // Store the selection and move on. List state still owns the write.
+  answer(rating)
 }
 
 // Handle cancel (close modal)
@@ -383,7 +321,7 @@ const quizTitle = computed(() => {
           <!-- Navigation buttons -->
           <div class="flex justify-between mt-3">
             <UButton
-              v-if="visitedCursors.length > 0"
+              v-if="canGoBack"
               variant="ghost"
               icon="i-lucide-arrow-left"
               @click="previousQuestion"

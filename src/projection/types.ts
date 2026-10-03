@@ -47,6 +47,11 @@ export interface ProjectListInput {
   catalogue: KinkCategory[]
   list: KinkList | null
   filters: ProjectionFilters
+  // The clock, in unix seconds, supplied by the caller so the projection never
+  // reads the system clock and stays deterministic. Newness is a relation
+  // between the catalogue and the List (ADR-0003), so it is decided by
+  // `list.created`; `now` is the projection's single reference to "now".
+  now: number
 }
 
 export interface ListProjection {

@@ -92,8 +92,9 @@ function groupIntoCategories(rows: ProjectedRow[]): ProjectedCategory[] {
 // The one read-side entry point (ADR-0002): a List projected into ordered
 // Category groups, a flat row sequence for sequential consumers, filter-
 // independent Progress, and diagnostics. Input is plain data only — no reactive
-// state, no browser globals, no locale, no clock — so rendering, quiz and export
-// are adapters over this function rather than re-deriving the same rules.
+// state, no browser globals, no locale, and no system clock: the caller injects
+// `now`, so rendering, quiz and export are adapters over this function rather
+// than re-deriving the same rules.
 export function projectList(input: ProjectListInput): ListProjection {
   if (!input.list)
     return emptyProjection()

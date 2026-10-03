@@ -10,6 +10,8 @@ import { projectList } from './projectList'
 export interface QuizProjectionInput {
   catalogue: KinkCategory[]
   list: KinkList | null
+  // The injected clock in unix seconds, passed through to the projection.
+  now: number
 }
 
 // 'all' is the normal Quiz: every answerable Position, answered or not.

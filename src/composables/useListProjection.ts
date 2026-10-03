@@ -2,7 +2,7 @@ import type { ComputedRef } from 'vue'
 import type { ListProjection, ProjectedProgress } from '../projection/types'
 import { computed } from 'vue'
 import { kinkList } from '../data/kinks'
-import { countNewKinks, projectAll, projectNewKinks, projectScreen } from './listAdapters'
+import { countNewKinks, currentUnixSeconds, projectAll, projectNewKinks, projectScreen } from './listAdapters'
 import { useKinkListState } from './useKinkList'
 
 export interface ListProjectionState {
@@ -28,9 +28,11 @@ export interface ListProjectionState {
 export function useListProjection(): ListProjectionState {
   const { activeList, filters } = useKinkListState()
 
-  const screen = computed(() => projectScreen(kinkList, activeList.value, filters.value))
-  const all = computed(() => projectAll(kinkList, activeList.value))
-  const newKinks = computed(() => projectNewKinks(kinkList, activeList.value))
+  const screen = computed(() =>
+    projectScreen(kinkList, activeList.value, filters.value, currentUnixSeconds()),
+  )
+  const all = computed(() => projectAll(kinkList, activeList.value, currentUnixSeconds()))
+  const newKinks = computed(() => projectNewKinks(kinkList, activeList.value, currentUnixSeconds()))
 
   return {
     screen,

@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest'
-import { category, CREATED_S, filters, generalKink, list, roleSpecificKink } from '../../projection/__tests__/fixtures'
+import { describe, expect, it, vi } from 'vitest'
+import { category, CREATED_S, filters, generalKink, list, NOW_S, roleSpecificKink } from '../../projection/__tests__/fixtures'
 import {
   countNewKinks,
+  currentUnixSeconds,
   NEW_ONLY_FILTERS,
   NO_DISPLAY_FILTERS,
   projectAll,
@@ -37,10 +38,23 @@ describe('list adapters', () => {
     })
   })
 
+  describe('clock', () => {
+    it('supplies the projection with unix seconds', () => {
+      vi.spyOn(Date, 'now').mockReturnValue(1_700_000_999_000)
+
+      try {
+        expect(currentUnixSeconds()).toBe(1_700_000_999)
+      }
+      finally {
+        vi.mocked(Date.now).mockRestore()
+      }
+    })
+  })
+
   describe('projectScreen', () => {
     it('renders exactly the rows the active Display filters admit', () => {
       const catalogue = [category('a', [generalKink(1), generalKink(2)])]
-      const screen = projectScreen(catalogue, list('both', { '1%general': 3 }), filters({ showOnlyUnfilled: true }))
+      const screen = projectScreen(catalogue, list('both', { '1%general': 3 }), filters({ showOnlyUnfilled: true }), NOW_S)
 
       expect(screen.rows.map(row => row.kink.key)).toEqual([2])
     })
@@ -49,8 +63,8 @@ describe('list adapters', () => {
       const catalogue = [category('a', [generalKink(1), generalKink(2)])]
       const active = list('both', { '1%general': 3 })
 
-      const unfilled = projectScreen(catalogue, active, filters({ showOnlyUnfilled: true }))
-      const filteredByChoice = projectScreen(catalogue, active, filters({ choiceFilters: [1, 2] }))
+      const unfilled = projectScreen(catalogue, active, filters({ showOnlyUnfilled: true }), NOW_S)
+      const filteredByChoice = projectScreen(catalogue, active, filters({ choiceFilters: [1, 2] }), NOW_S)
 
       expect(unfilled.progress).toEqual({ completed: 1, total: 2, percentage: 50 })
       expect(filteredByChoice.progress).toEqual(unfilled.progress)
@@ -61,14 +75,14 @@ describe('list adapters', () => {
         category('kept', [generalKink(1)]),
         category('hidden', [generalKink(2)]),
       ]
-      const screen = projectScreen(catalogue, list('both', {}), filters({ choiceFilters: [3] }))
+      const screen = projectScreen(catalogue, list('both', {}), filters({ choiceFilters: [3] }), NOW_S)
 
       // Nothing carries choice 3, so both Categories drop out.
       expect(screen.categories).toEqual([])
     })
 
     it('returns an empty projection for a null List', () => {
-      const screen = projectScreen([category('a', [generalKink(1)])], null, NO_DISPLAY_FILTERS)
+      const screen = projectScreen([category('a', [generalKink(1)])], null, NO_DISPLAY_FILTERS, NOW_S)
 
       expect(screen.categories).toEqual([])
       expect(screen.rows).toEqual([])
@@ -80,12 +94,12 @@ describe('list adapters', () => {
     it('ignores Display filters entirely', () => {
       const catalogue = [category('a', [generalKink(1, CREATED_S - 10)])]
 
-      expect(projectAll(catalogue, list('both', {})).rows).toHaveLength(1)
+      expect(projectAll(catalogue, list('both', {}), NOW_S).rows).toHaveLength(1)
     })
 
     it('carries every answerable Position, one row each', () => {
       const catalogue = [category('a', [roleSpecificKink(1, [DOM, DOM_PARTNER, SUB, SUB_PARTNER])])]
-      const all = projectAll(catalogue, list('both', {}))
+      const all = projectAll(catalogue, list('both', {}), NOW_S)
 
       expect(all.rows.map(row => row.position)).toEqual(['as_dom', 'for_sub', 'as_sub', 'for_dom'])
     })
@@ -101,7 +115,7 @@ describe('list adapters', () => {
           generalKink(4), // Undated is never New
         ]),
       ]
-      const newKinks = projectNewKinks(catalogue, list('both', { '2%general': 1 }))
+      const newKinks = projectNewKinks(catalogue, list('both', { '2%general': 1 }), NOW_S)
 
       expect(newKinks.rows.map(row => row.kink.key)).toEqual([1])
     })
@@ -112,8 +126,8 @@ describe('list adapters', () => {
       const catalogue = [category('a', [generalKink(1, CREATED_S + 10)])]
       const active = list('both', { '1%general': 2 })
 
-      expect(projectNewKinks(catalogue, active).rows).toEqual([])
-      expect(projectScreen(catalogue, active, filters({ choiceFilters: [2] })).rows).toHaveLength(1)
+      expect(projectNewKinks(catalogue, active, NOW_S).rows).toEqual([])
+      expect(projectScreen(catalogue, active, filters({ choiceFilters: [2] }), NOW_S).rows).toHaveLength(1)
     })
   })
 
@@ -127,14 +141,14 @@ describe('list adapters', () => {
         ]),
       ]
 
-      expect(countNewKinks(projectAll(catalogue, list('both', {})).rows)).toBe(2)
+      expect(countNewKinks(projectAll(catalogue, list('both', {}), NOW_S).rows)).toBe(2)
     })
 
     it('is zero without a List and for a catalogue with nothing new', () => {
       const catalogue = [category('a', [generalKink(1, CREATED_S - 10)])]
 
-      expect(countNewKinks(projectAll(catalogue, null).rows)).toBe(0)
-      expect(countNewKinks(projectAll(catalogue, list('both', {})).rows)).toBe(0)
+      expect(countNewKinks(projectAll(catalogue, null, NOW_S).rows)).toBe(0)
+      expect(countNewKinks(projectAll(catalogue, list('both', {}), NOW_S).rows)).toBe(0)
     })
 
     it('counts a New Kink only where this List role can answer it', () => {
@@ -144,8 +158,8 @@ describe('list adapters', () => {
         category('a', [roleSpecificKink(1, [DOM, DOM_PARTNER], CREATED_S + 10)]),
       ]
 
-      expect(countNewKinks(projectAll(catalogue, list('dom', {})).rows)).toBe(1)
-      expect(countNewKinks(projectAll(catalogue, list('sub', {})).rows)).toBe(0)
+      expect(countNewKinks(projectAll(catalogue, list('dom', {}), NOW_S).rows)).toBe(1)
+      expect(countNewKinks(projectAll(catalogue, list('sub', {}), NOW_S).rows)).toBe(0)
     })
 
     it('agrees with itself whichever projection the count is read from', () => {
@@ -161,9 +175,9 @@ describe('list adapters', () => {
       ]
       const active = list('both', {})
 
-      const fromWholeList = countNewKinks(projectAll(catalogue, active).rows)
+      const fromWholeList = countNewKinks(projectAll(catalogue, active, NOW_S).rows)
       const fromNewFilter = countNewKinks(
-        projectScreen(catalogue, active, filters({ showOnlyNew: true })).rows,
+        projectScreen(catalogue, active, filters({ showOnlyNew: true }), NOW_S).rows,
       )
 
       expect(fromWholeList).toBe(2)

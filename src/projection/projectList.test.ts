@@ -1,6 +1,6 @@
 import type { KinkDefinition } from '../types'
-import { describe, expect, it } from 'vitest'
-import { category, CREATED_S, filters, generalKink, list, roleSpecificKink } from './__tests__/fixtures'
+import { describe, expect, it, vi } from 'vitest'
+import { category, CREATED_S, filters, generalKink, list, NOW_S, roleSpecificKink } from './__tests__/fixtures'
 import { projectList } from './projectList'
 
 const ALL_PERSPECTIVES = [
@@ -15,6 +15,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0)])],
       list: null,
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -28,6 +29,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0)])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -41,6 +43,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('dom'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -53,6 +56,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('sub'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -63,6 +67,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -76,6 +81,7 @@ describe('projectList', () => {
         { role: 'dom', perspective: 'partner' },
       ])])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -89,6 +95,7 @@ describe('projectList', () => {
         { role: 'sub', perspective: 'partner' },
       ])])],
       list: list('sub'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -100,6 +107,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [kink])],
       list: list('dom'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -111,6 +119,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1)])],
       list: list('both', { '0%general': 6, '1%general': 3 }),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -121,6 +130,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('dom', { '10%as_dom': 2 }),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -131,6 +141,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES], CREATED_S + 1)])],
       list: list('dom'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -141,6 +152,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0, CREATED_S)])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -151,6 +163,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0, CREATED_S - 1)])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -161,16 +174,46 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0)])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
     expect(projection.rows.map(row => row.isNew)).toEqual([false])
   })
 
+  it('reads newness from the list creation time, never from the injected clock', () => {
+    const catalogue = [category('bodies', [generalKink(0, CREATED_S + 1), generalKink(1, CREATED_S - 1)])]
+
+    const atCreation = projectList({ catalogue, list: list('both'), now: CREATED_S, filters: filters() })
+    const farLater = projectList({ catalogue, list: list('both'), now: CREATED_S + 10 * 365 * 24 * 3_600, filters: filters() })
+
+    expect(atCreation.rows.map(row => row.isNew)).toEqual([true, false])
+    expect(farLater.rows.map(row => row.isNew)).toEqual(atCreation.rows.map(row => row.isNew))
+  })
+
+  it('does not read the system clock when projecting', () => {
+    const systemNow = vi.spyOn(Date, 'now').mockReturnValue(4_000_000_000_000)
+
+    try {
+      const projection = projectList({
+        catalogue: [category('bodies', [generalKink(0, CREATED_S - 1)])],
+        list: list('both'),
+        now: NOW_S,
+        filters: filters({ showOnlyNew: true }),
+      })
+
+      expect(projection.rows).toEqual([])
+    }
+    finally {
+      systemNow.mockRestore()
+    }
+  })
+
   it('admits no row when only some rows of a kink satisfy the active filters', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('both', { '10%as_dom': 5, '10%for_sub': 2 }),
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true, choiceFilters: [5] }),
     })
 
@@ -181,6 +224,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('both', { '10%as_dom': 5, '10%for_sub': 2 }),
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true, choiceFilters: [0] }),
     })
 
@@ -191,6 +235,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1)])],
       list: list('both', { '0%general': 4 }),
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true, choiceFilters: [4, 6] }),
     })
 
@@ -201,6 +246,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0)])],
       list: list('both', { '0%general': 4 }),
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true, choiceFilters: [] }),
     })
 
@@ -215,6 +261,7 @@ describe('projectList', () => {
         generalKink(2),
       ])],
       list: list('both'),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true }),
     })
 
@@ -225,6 +272,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1)])],
       list: list('both', { '0%general': 2 }),
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true }),
     })
 
@@ -235,6 +283,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1), generalKink(2)])],
       list: list('both', { '0%general': 1, '1%general': 3 }),
+      now: NOW_S,
       filters: filters({ choiceFilters: [3] }),
     })
 
@@ -245,6 +294,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1)])],
       list: list('both', { '0%general': 1 }),
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true, choiceFilters: [0] }),
     })
 
@@ -260,6 +310,7 @@ describe('projectList', () => {
         generalKink(2, CREATED_S + 1),
       ])],
       list: list('both', { '1%general': 6 }),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true, showOnlyUnfilled: true, choiceFilters: [0] }),
     })
 
@@ -270,6 +321,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1)])],
       list: list('both', { '0%general': 2 }),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -280,6 +332,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), generalKink(1), generalKink(2)])],
       list: list('both', { '0%general': 1 }),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -290,6 +343,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])],
       list: list('both', { '10%as_dom': 3, '10%for_sub': 4 }),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -303,13 +357,14 @@ describe('projectList', () => {
     ]
     const kinkList = list('both', { '0%general': 2, '10%as_dom': 6, '10%for_sub': 1 })
 
-    const unfiltered = projectList({ catalogue, list: kinkList, filters: filters() })
-    const onlyNew = projectList({ catalogue, list: kinkList, filters: filters({ showOnlyNew: true }) })
-    const onlyUnfilled = projectList({ catalogue, list: kinkList, filters: filters({ showOnlyUnfilled: true }) })
-    const onlyChoice = projectList({ catalogue, list: kinkList, filters: filters({ choiceFilters: [6] }) })
+    const unfiltered = projectList({ catalogue, list: kinkList, filters: filters(), now: NOW_S })
+    const onlyNew = projectList({ catalogue, list: kinkList, filters: filters({ showOnlyNew: true }), now: NOW_S })
+    const onlyUnfilled = projectList({ catalogue, list: kinkList, filters: filters({ showOnlyUnfilled: true }), now: NOW_S })
+    const onlyChoice = projectList({ catalogue, list: kinkList, filters: filters({ choiceFilters: [6] }), now: NOW_S })
     const contradictory = projectList({
       catalogue,
       list: kinkList,
+      now: NOW_S,
       filters: filters({ showOnlyUnfilled: true, choiceFilters: [6] }),
     })
 
@@ -325,8 +380,8 @@ describe('projectList', () => {
     const catalogue = [category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES])])]
     const kinkList = list('both')
 
-    const unfiltered = projectList({ catalogue, list: kinkList, filters: filters() })
-    const onlyUnfilled = projectList({ catalogue, list: kinkList, filters: filters({ showOnlyUnfilled: true }) })
+    const unfiltered = projectList({ catalogue, list: kinkList, filters: filters(), now: NOW_S })
+    const onlyUnfilled = projectList({ catalogue, list: kinkList, filters: filters({ showOnlyUnfilled: true }), now: NOW_S })
 
     expect(unfiltered.progress.total).toBe(unfiltered.rows.length)
     expect(unfiltered.progress.total).toBe(4)
@@ -337,6 +392,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -352,6 +408,7 @@ describe('projectList', () => {
         category('bodies', [generalKink(0), generalKink(1)]),
       ],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -366,6 +423,7 @@ describe('projectList', () => {
         roleSpecificKink(11, [...ALL_PERSPECTIVES]),
       ])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -388,6 +446,7 @@ describe('projectList', () => {
         category('service', [generalKink(20)]),
       ],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -402,6 +461,7 @@ describe('projectList', () => {
         category('service', [generalKink(20, CREATED_S - 1)]),
       ],
       list: list('both'),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true }),
     })
 
@@ -416,6 +476,7 @@ describe('projectList', () => {
         roleSpecificKink(10, [...ALL_PERSPECTIVES], CREATED_S + 1),
       ])],
       list: list('dom'),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true }),
     })
 
@@ -428,6 +489,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [kink]), category('bodies', [generalKink(0)])],
       list: list('sub'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -440,6 +502,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [kink])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -452,6 +515,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('bodies', [generalKink(0), answerable])],
       list: list('both'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -463,6 +527,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [kink])],
       list: list('sub'),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true, showOnlyUnfilled: true }),
     })
 
@@ -486,6 +551,7 @@ describe('projectList', () => {
       projectList({
         catalogue: [category('dynamics', [roleSpecificKink(10, [{ role: 'dom', perspective: 'self' }])])],
         list: list('sub'),
+        now: NOW_S,
         filters: filters(),
       })
     }
@@ -501,6 +567,7 @@ describe('projectList', () => {
     const projection = projectList({
       catalogue: [category('dynamics', [roleSpecificKink(10, [{ role: 'dom', perspective: 'self' }])])],
       list: list('sub'),
+      now: NOW_S,
       filters: filters(),
     })
 
@@ -514,10 +581,11 @@ describe('projectList', () => {
     ]
     const kinkList = list('both', { '0%general': 2, '10%as_dom': 6 })
 
-    const normalQuiz = projectList({ catalogue, list: kinkList, filters: filters() })
+    const normalQuiz = projectList({ catalogue, list: kinkList, filters: filters(), now: NOW_S })
     const filteredView = projectList({
       catalogue,
       list: kinkList,
+      now: NOW_S,
       filters: filters({ showOnlyNew: true, choiceFilters: [6] }),
     })
 
@@ -539,6 +607,7 @@ describe('projectList', () => {
         category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES], CREATED_S + 1)]),
       ],
       list: list('both', { '0%general': 5, '10%as_dom': 6, '10%for_sub': 1 }),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true, showOnlyUnfilled: true }),
     })
 
@@ -555,6 +624,7 @@ describe('projectList', () => {
         category('dynamics', [roleSpecificKink(10, [...ALL_PERSPECTIVES], CREATED_S - 1)]),
       ],
       list: list('dom', { '0%general': 1 }),
+      now: NOW_S,
       filters: filters({ showOnlyNew: true, showOnlyUnfilled: true }),
     })
 

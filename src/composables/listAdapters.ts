@@ -27,6 +27,14 @@ export const NEW_ONLY_FILTERS: ProjectionFilters = {
 }
 
 /**
+ * The current time in unix seconds, the units the projection's injected `now`
+ * uses. Reading the clock here keeps it outside the pure projection.
+ */
+export function currentUnixSeconds(): number {
+  return Math.floor(Date.now() / 1000)
+}
+
+/**
  * What the List screen renders: Category groups of Position rows that survive
  * the active Display filters, plus filter-independent Progress.
  */
@@ -34,24 +42,33 @@ export function projectScreen(
   catalogue: KinkCategory[],
   list: KinkList | null,
   filters: ProjectionFilters,
+  now: number,
 ): ListProjection {
-  return projectList({ catalogue, list, filters })
+  return projectList({ catalogue, list, filters, now })
 }
 
 /**
  * The whole List, ignoring the Display filters. Used for totals that must not
  * change when the user filters the screen.
  */
-export function projectAll(catalogue: KinkCategory[], list: KinkList | null): ListProjection {
-  return projectList({ catalogue, list, filters: NO_DISPLAY_FILTERS })
+export function projectAll(
+  catalogue: KinkCategory[],
+  list: KinkList | null,
+  now: number,
+): ListProjection {
+  return projectList({ catalogue, list, filters: NO_DISPLAY_FILTERS, now })
 }
 
 /**
  * The New-plus-unanswered projection. Whether it has a row at all is the
  * availability signal for the new-only flow.
  */
-export function projectNewKinks(catalogue: KinkCategory[], list: KinkList | null): ListProjection {
-  return projectList({ catalogue, list, filters: NEW_ONLY_FILTERS })
+export function projectNewKinks(
+  catalogue: KinkCategory[],
+  list: KinkList | null,
+  now: number,
+): ListProjection {
+  return projectList({ catalogue, list, filters: NEW_ONLY_FILTERS, now })
 }
 
 /**

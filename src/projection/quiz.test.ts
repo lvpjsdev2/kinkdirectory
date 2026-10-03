@@ -1,6 +1,6 @@
 import type { RolePerspective } from '../types'
 import { describe, expect, it } from 'vitest'
-import { category, CREATED_S, generalKink, list, roleSpecificKink } from './__tests__/fixtures'
+import { category, CREATED_S, generalKink, list, NOW_S, roleSpecificKink } from './__tests__/fixtures'
 import { projectQuizRows } from './quiz'
 
 const ALL_PERSPECTIVES: RolePerspective[] = [
@@ -21,6 +21,7 @@ describe('projectQuizRows', () => {
         category('bodies', [generalKink(0, CREATED_S + 1), generalKink(1, CREATED_S - 1)]),
         category('dynamics', [roleSpecificKink(10, ALL_PERSPECTIVES, CREATED_S + 1)]),
       ],
+      now: NOW_S,
       list: list('both', { '0%general': 2, '10%as_dom': 6 }),
     }, 'all')
 
@@ -37,6 +38,7 @@ describe('projectQuizRows', () => {
   it('keeps answered positions in the normal quiz', () => {
     const rows = projectQuizRows({
       catalogue: [category('bodies', [generalKink(0), generalKink(1)])],
+      now: NOW_S,
       list: list('dom', { '0%general': 3, '1%general': 4 }),
     }, 'all')
 
@@ -49,6 +51,7 @@ describe('projectQuizRows', () => {
         category('bodies', [generalKink(0, CREATED_S + 1), generalKink(1, CREATED_S - 1), generalKink(2)]),
         category('dynamics', [roleSpecificKink(10, ALL_PERSPECTIVES, CREATED_S + 1)]),
       ],
+      now: NOW_S,
       list: list('both', { '0%general': 5, '10%as_dom': 6, '10%for_sub': 1 }),
     }, 'newAndUnanswered')
 
@@ -61,6 +64,7 @@ describe('projectQuizRows', () => {
         category('bodies', [generalKink(0, CREATED_S + 1)]),
         category('dynamics', [roleSpecificKink(10, ALL_PERSPECTIVES, CREATED_S - 1)]),
       ],
+      now: NOW_S,
       list: list('dom', { '0%general': 1 }),
     }, 'newAndUnanswered')
 
@@ -68,7 +72,7 @@ describe('projectQuizRows', () => {
   })
 
   it('gives both scopes no rows without an active list', () => {
-    const input = { catalogue: [category('bodies', [generalKink(0)])], list: null }
+    const input = { catalogue: [category('bodies', [generalKink(0)])], list: null, now: NOW_S }
 
     expect(projectQuizRows(input, 'all')).toEqual([])
     expect(projectQuizRows(input, 'newAndUnanswered')).toEqual([])
@@ -77,6 +81,7 @@ describe('projectQuizRows', () => {
   it('carries the resolved choice and newness of each row', () => {
     const rows = projectQuizRows({
       catalogue: [category('bodies', [generalKink(0, CREATED_S + 1)])],
+      now: NOW_S,
       list: list('sub', { '0%general': 5 }),
     }, 'all')
 

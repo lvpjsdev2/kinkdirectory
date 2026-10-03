@@ -10,6 +10,10 @@ export const CREATED_MS = 1_700_000_000_000
 // while a list stores `created` in milliseconds.
 export const CREATED_S = 1_700_000_000
 
+// The clock every test injects, in unix seconds like the projection's `now`.
+// Fixed rather than read from the system, so projections stay deterministic.
+export const NOW_S = CREATED_S + 3_600
+
 export function generalKink(key: number, addedAt?: number): KinkDefinition {
   return { id: `general_${key}`, format: 'general', key, ...(addedAt === undefined ? {} : { addedAt }) }
 }
