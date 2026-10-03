@@ -12,7 +12,7 @@ const props = defineProps<{
   kinks: KinkDefinition[]
 }>()
 const { t } = useI18n()
-const { activeList, isKinkVisibleForRole, getKinkPositions, filters, shouldShowKink } = useKinkListState()
+const { activeList, isKinkVisibleForRole, getKinkPositions, getKinkChoice, filters, shouldShowKink } = useKinkListState()
 
 // Filter kinks to only show those that are applicable to the user's role
 const visibleKinks = computed(() => {

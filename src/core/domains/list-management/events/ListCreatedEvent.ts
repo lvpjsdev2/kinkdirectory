@@ -1,11 +1,11 @@
-import { DomainEvent } from './DomainEvent';
+import { DomainEvent } from './DomainEvent'
 
 export class ListCreatedEvent extends DomainEvent {
   constructor(
     aggregateId: string,
     public readonly name: string,
-    public readonly role: 'sub' | 'dom' | 'both'
+    public readonly role: 'sub' | 'dom' | 'both',
   ) {
-    super(aggregateId);
+    super(aggregateId)
   }
 }

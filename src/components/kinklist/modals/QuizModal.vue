@@ -18,8 +18,9 @@ const {
   getVisibleKinksForQuiz,
   setKinkChoice,
   getKinkChoice,
+  isKinkNew,
   newUnfilledPositionsCount,
-  newKinksAvailable
+  newKinksAvailable,
 } = useKinkListState()
 const { kinkChoiceOrder, settings } = useSettings()
 
@@ -237,9 +238,10 @@ function startNewKinksQuiz() {
   isNewKinksOnly.value = true
   const allVisibleKinks = getVisibleKinksForQuiz()
 
-  // Filter to only include new kinks with unfilled positions
+  // Filter to only include new kinks with unfilled positions. "New" is
+  // relative to the list's creation (ADR 0002), not a wall-clock window.
   const filteredKinks = allVisibleKinks
-    .filter(item => item.kink.addedAt && item.kink.addedAt > twoDaysAgo)
+    .filter(item => isKinkNew(item.kink.addedAt))
     .map((item) => {
       // Create a copy of the item with only unfilled positions
       const unfilled = {
