@@ -13,4 +13,4 @@
 - [ ] All read-side consumers use the agreed projection seam.
 - [ ] Build, typecheck, lint, and projection tests pass.
 - [ ] One end-to-end smoke run covers filtered List rendering, filter-independent Progress, both Quiz modes, locale-independent projection data, and screenshot export.
-- [ ] ADR-0002 and the implementation contract remain consistent with the landed behavior.
+- [ ] ADR-0003 and the implementation contract remain consistent with the landed behavior; ADR-0002's non-Newness decisions remain intact.

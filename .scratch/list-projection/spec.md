@@ -18,7 +18,7 @@ All read-side consumers use this projection directly or indirectly. List renderi
 2. As a person viewing a general Kink, I want one general Position row, so that a role-independent answer is not duplicated across role-specific columns.
 3. As a person viewing a role-specific Kink, I want only Positions allowed by both the List role and the Kink perspectives, so that irrelevant answers are not displayed.
 4. As a person with a Both List, I want all applicable dominant and submissive Positions available, so that neither side of the List is hidden.
-5. As a person filtering by New, I want only Position rows belonging to Kinks added strictly within the last 48 hours, so that the filter has one predictable boundary.
+5. As a person filtering by New, I want only Position rows belonging to Kinks added after the List was created, so that the filter follows the catalogue version the List has seen.
 6. As a person filtering by New, I want undated Kinks excluded, so that missing catalogue metadata is not mistaken for recent content.
 7. As a person filtering for unanswered rows, I want only rows without a Choice, so that every visible row still needs an answer.
 8. As a person filtering by Choice, I want each visible row to carry one of the selected Choices, so that a Kink cannot appear because another Position matched.
@@ -32,7 +32,7 @@ All read-side consumers use this projection directly or indirectly. List renderi
 16. As a person navigating a quiz, I want questions in catalogue and Position order, so that navigation is stable and predictable.
 17. As a person exporting the visible List, I want export content to reflect the currently filtered view, so that the image matches the rows I chose to display.
 18. As a person switching locale, I want projected data to remain language-independent, so that the same List rules work with every translation.
-19. As a maintainer, I want the clock injected into New calculation, so that the 48-hour boundary is deterministic and testable.
+19. As a maintainer, I want New calculation to compare catalogue timestamps with the List creation timestamp, so that it is deterministic and independent of the current date.
 20. As a maintainer, I want one read-side projection entry point, so that a future List rule cannot be implemented differently for rendering, Progress, quiz, or export.
 21. As a maintainer, I want malformed role-specific Kinks that yield no Position reported as diagnostics rather than console side effects, so that projection remains pure and callers may decide how to surface data problems.
 22. As a maintainer, I want a null active List to produce an empty projection rather than throw, so that consumers can render transient state safely.
@@ -47,7 +47,7 @@ All read-side consumers use this projection directly or indirectly. List renderi
 - The result also contains the same filtered Position rows as one flat sequence for quiz traversal and other sequential consumers. Each row carries its Category identity, Kink definition, Position, resolved Choice, and New flag. It does not carry localized strings, CSS concerns, storage keys, or presentation-specific display values.
 - General Kinks produce exactly one general row. Role-specific Kinks use the existing canonical List-role-to-Position order and perspective matching established by ADR-0001.
 - Display filtering is one conjunction evaluated against each Position row: New-only requires the row's Kink to be New; unanswered-only requires the row's Choice to be absent; active Choice filters require the row's Choice to be included. Empty Choice filters are inactive.
-- New means that the Kink has an `addedAt` value strictly greater than `now - 48 hours`. An absent date is never New. Input clock and catalogue timestamps use seconds.
+- New means that the Kink has an `addedAt` value strictly later than the active List's `created` timestamp. An absent date is never New. Catalogue timestamps use seconds; List creation timestamps use milliseconds.
 - Progress is derived before Display filters are applied. Its total is every answerable Position, its answered count is every row carrying a Choice, and its percentage uses the existing application rounding behavior. Empty Progress is zero rather than an invalid division.
 - The normal quiz calls the same projection with all Display filters inactive. The new-only quiz calls it with New-only and unanswered-only active and Choice filters inactive. Neither quiz inherits the user's current Display filters.
 - Quiz traversal consumes the flat Position-row sequence with one cursor. It does not create another Category/Kink/Position projection or retain a second definition of New Kinks.
@@ -66,7 +66,7 @@ All read-side consumers use this projection directly or indirectly. List renderi
 - Cover one general Kink producing one general row and role-specific Kinks producing the canonical Position subsets for Dominant, Submissive, and Both Lists.
 - Cover same-row conjunction explicitly: construct a Kink with multiple Positions whose different rows would satisfy different filters and verify no cross-Position match is admitted.
 - Cover the contradictory unanswered-only plus nonzero Choice-filter case and verify the filtered result is empty.
-- Cover New boundaries with injected time: strictly newer than 48 hours is New, exactly 48 hours is not, older is not, and undated is not.
+- Cover New boundaries with synthetic List creation times: strictly later than the List creation timestamp is New, exactly equal is not, older is not, and undated is not.
 - Cover Progress independence by projecting the same List under several filters and verifying answered, total, and percentage remain identical while visible rows change.
 - Cover normal-quiz and new-only-quiz inputs through the same projection contract, including an empty new-only result and catalogue/Position ordering.
 - Cover a null List, an empty catalogue, and a role-specific Kink with no applicable Position. Verify empty values and diagnostics, not thrown errors or console output.
@@ -88,6 +88,6 @@ All read-side consumers use this projection directly or indirectly. List renderi
 ## Further Notes
 
 - The domain terms List, Kink, Position, Choice, Display filter, New, and Progress carry the meanings in the repository domain documentation.
-- ADR-0001 defines one row per answerable Position. ADR-0002 defines the single projection root, same-row filter conjunction, filter-independent Progress, quiz scopes, and the selected interface shape.
+- ADR-0001 (one row per Position) defines Position expansion. ADR-0002 (one List projection behind one seam) defines the projection root, same-row filter conjunction, filter-independent Progress, quiz scopes, and selected interface shape. ADR-0003 supersedes only ADR-0002's Newness clause and defines Newness relative to List creation.
 - The deliberate behavior change is that contradictory or cross-Position filter combinations no longer leak visible Kinks. Consumers must not preserve the prior Kink-level existential behavior for compatibility.
 - The implementation is a clean cutover: all consumers move together and obsolete derivations are deleted in the same change.

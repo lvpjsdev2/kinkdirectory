@@ -8,7 +8,7 @@
 
 - [ ] General Kinks produce exactly one `general` row; role-specific Kinks produce the canonical Position subset for `dom`, `sub`, and `both` Lists.
 - [ ] New, unanswered, and Choice filters are applied as a same-row conjunction, including the contradictory unanswered-plus-nonzero Choice case.
-- [ ] New uses injected time, is strictly newer than 48 hours, and excludes undated Kinks.
+- [ ] New is determined by `Kink.addedAt > List.created` (catalogue seconds versus List milliseconds) and excludes undated Kinks.
 - [ ] Progress covers all answerable Positions and is independent of Display filters.
 - [ ] Flat rows preserve catalogue and canonical Position order and expose Category identity, Kink, Position, Choice, and New state without locale or styling data.
 - [ ] Normal-quiz and new-only-quiz row sets are expressible through the same projection contract.
