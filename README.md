@@ -30,6 +30,10 @@ The directory allows you to specify your role preference, which helps tailor you
 
 Dutch is kept in the repository as the source language for new labels, but is not offered in the UI.
 
+## 📝 Russian Translation Audit
+
+The repository contains a [Russian translation quality audit](./RUSSIAN_TRANSLATION_QUALITY.md). It records localization key mismatches, semantic translation errors, terminology inconsistencies, tooltip issues, and the recommended correction order. The audit does not modify locale files.
+
 ## 🛡️ Privacy First
 
 Your privacy is our top priority:
