@@ -53,8 +53,9 @@ each row stands on its own.
 only, unanswered only, or by Choice). A filter changes the view, never the
 List. _Avoid_: unfilled (except as the filter's display label).
 
-**New** — a Kink that entered the catalogue within the last two days:
-strictly newer than 48 hours. A Kink with no recorded date is never New.
+**New** — a Kink whose `addedAt` is later than the List's `created`. Newness
+is a relation between the catalogue and each List, not a span of calendar
+time; see ADR 0002. A Kink with no recorded date is never New.
 
 **Progress** — how much of a List is answered: the share of its answerable
 Positions that carry a Choice. Always measured over the whole List, never

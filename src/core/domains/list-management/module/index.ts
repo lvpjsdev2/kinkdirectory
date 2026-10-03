@@ -1,25 +1,27 @@
-import { List } from '../entities/List';
-import { ListId } from '../value-objects/ListId';
-import { ListName } from '../value-objects/ListName';
-import { UserRole } from '../value-objects/UserRole';
-import { Selection } from '../value-objects/Selection';
-import { IListRepository, LIST_REPOSITORY_TOKEN } from '../repositories/IListRepository';
-import { LocalStorageListRepository } from '../repositories/LocalStorageListRepository';
-import { ListManagementService } from '../services/ListManagementService';
-import { InMemoryDomainEventBus, IDomainEventBus } from '../services/DomainEventBus';
-import {
-  ListReadModel,
-  QuizProjection,
-  FilterProjection,
-  ShareProjection,
-} from '../projections/ListProjections';
+import type { IListRepository } from '../repositories/IListRepository'
+import type { IDomainEventBus } from '../services/DomainEventBus'
+import { List } from '../entities/List'
 import {
   DomainEvent,
   ListCreatedEvent,
-  ListUpdatedEvent,
   ListDeletedEvent,
+  ListUpdatedEvent,
   SelectionChangedEvent,
-} from '../events';
+} from '../events'
+import {
+  FilterProjection,
+  ListReadModel,
+  QuizProjection,
+  ShareProjection,
+} from '../projections/ListProjections'
+import { LIST_REPOSITORY_TOKEN } from '../repositories/IListRepository'
+import { LocalStorageListRepository } from '../repositories/LocalStorageListRepository'
+import { DOMAIN_EVENT_BUS_TOKEN, InMemoryDomainEventBus } from '../services/DomainEventBus'
+import { ListManagementService } from '../services/ListManagementService'
+import { ListId } from '../value-objects/ListId'
+import { ListName } from '../value-objects/ListName'
+import { Selection } from '../value-objects/Selection'
+import { UserRole } from '../value-objects/UserRole'
 
 export const listManagementModule = {
   name: 'list-management',
@@ -35,7 +37,7 @@ export const listManagementModule = {
 
   services: [
     ListManagementService,
-    { provide: IDomainEventBus, useClass: InMemoryDomainEventBus },
+    { provide: DOMAIN_EVENT_BUS_TOKEN, useClass: InMemoryDomainEventBus },
   ],
 
   repositories: [
@@ -56,24 +58,25 @@ export const listManagementModule = {
     ListDeletedEvent,
     SelectionChangedEvent,
   ],
-};
+}
 
+export { DOMAIN_EVENT_BUS_TOKEN }
 export type {
-  List,
-  ListId,
-  ListName,
-  UserRole,
-  Selection,
-  IListRepository,
-  ListManagementService,
-  IDomainEventBus,
-  ListReadModel,
-  QuizProjection,
-  FilterProjection,
-  ShareProjection,
   DomainEvent,
+  FilterProjection,
+  IDomainEventBus,
+  IListRepository,
+  List,
   ListCreatedEvent,
-  ListUpdatedEvent,
   ListDeletedEvent,
+  ListId,
+  ListManagementService,
+  ListName,
+  ListReadModel,
+  ListUpdatedEvent,
+  QuizProjection,
+  Selection,
   SelectionChangedEvent,
-};
+  ShareProjection,
+  UserRole,
+}

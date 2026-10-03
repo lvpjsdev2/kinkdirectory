@@ -1,5 +1,5 @@
-export { DomainEvent } from './DomainEvent';
-export { ListCreatedEvent } from './ListCreatedEvent';
-export { ListUpdatedEvent } from './ListUpdatedEvent';
-export { ListDeletedEvent } from './ListDeletedEvent';
-export { SelectionChangedEvent, type KinkPosition, type KinkChoice } from './SelectionChangedEvent';
+export { DomainEvent } from './DomainEvent'
+export { ListCreatedEvent } from './ListCreatedEvent'
+export { ListDeletedEvent } from './ListDeletedEvent'
+export { ListUpdatedEvent } from './ListUpdatedEvent'
+export { type KinkChoice, type KinkPosition, SelectionChangedEvent } from './SelectionChangedEvent'
