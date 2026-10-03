@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import type { KinkChoice as KinkChoiceType, KinkDefinition, KinkPosition } from '../../../types'
+import type { ProjectedRow } from '../../../projection/types'
+import type { KinkChoice as KinkChoiceType } from '../../../types'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getDisplayValue } from '../../../composables/kink.helpers'
 import { useKinkListState } from '../../../composables/useKinkList'
 import { useSettings } from '../../../composables/useSettings'
+import { kinkList } from '../../../data/kinks'
+import { projectQuizRows } from '../../../projection/quiz'
 import { KINK_POSITION_DISPLAY } from '../../../types'
 
 defineProps<{
@@ -15,25 +18,23 @@ const emit = defineEmits<{
 }>()
 const { t } = useI18n()
 const {
-  getVisibleKinksForQuiz,
+  activeList,
   setKinkChoice,
   getKinkChoice,
-  isKinkNew,
-  newUnfilledPositionsCount,
-  newKinksAvailable,
 } = useKinkListState()
 const { kinkChoiceOrder, settings } = useSettings()
 
-// Quiz state variables
-const allKinks = ref<Array<{ categoryId: string, kink: KinkDefinition, positions: KinkPosition[] }>>([])
-const currentIndex = ref(0)
-const currentPositionIndex = ref(0)
+// Quiz state variables. The quiz traverses the flat projected Position-row
+// sequence with a single cursor; it holds no Position or New knowledge of its
+// own.
+const quizRows = ref<ProjectedRow[]>([])
+const cursor = ref(0)
 const quizCompleted = ref(false)
 const hasStarted = ref(false)
 // Track if we're only quizzing new kinks
 const isNewKinksOnly = ref(false)
-// Track quiz history for back button functionality
-const quizHistory = ref<Array<{ kinkIndex: number, positionIndex: number, value: KinkChoiceType }>>([])
+// Cursors already visited, so the back button returns to the previous question
+const visitedCursors = ref<number[]>([])
 
 // Active color classes (selected)
 const activeColorClasses = {
@@ -63,46 +64,24 @@ const quizValues = computed(() => {
   return [...reversedOrder, 0] as KinkChoiceType[]
 })
 
-// Get the current kink and position
-const currentKink = computed(() => {
-  if (allKinks.value.length === 0 || currentIndex.value >= allKinks.value.length)
-    return null
-  return allKinks.value[currentIndex.value]
-})
+// Get the current projected row, and the Kink and Position it names
+const currentRow = computed(() => quizRows.value[cursor.value] ?? null)
 
-const currentPosition = computed(() => {
-  if (!currentKink.value || currentPositionIndex.value >= currentKink.value.positions.length)
-    return null
-  return currentKink.value.positions[currentPositionIndex.value]
-})
+const currentKink = computed(() => currentRow.value?.kink ?? null)
 
-// Calculate total positions and current position for more accurate progress
-const totalPositions = computed(() => {
-  return allKinks.value.reduce((total, item) => total + item.positions.length, 0)
-})
+const currentPosition = computed(() => currentRow.value?.position ?? null)
 
-// Calculate the current position number across all kinks
-const currentPositionNumber = computed(() => {
-  if (currentIndex.value >= allKinks.value.length) {
-    return totalPositions.value
-  }
+const totalPositions = computed(() => quizRows.value.length)
 
-  // Count positions from completed kinks
-  let completedPositions = 0
-  for (let i = 0; i < currentIndex.value; i++) {
-    completedPositions += allKinks.value[i].positions.length
-  }
-
-  // Add current position within current kink
-  return completedPositions + currentPositionIndex.value + 1
-})
+// The current question number, clamped to the sequence length
+const currentPositionNumber = computed(() => Math.min(cursor.value + 1, totalPositions.value))
 
 // Calculate progress as a percentage
 const progress = computed(() => {
   if (totalPositions.value === 0)
     return 0
 
-  return Math.round((currentPositionNumber.value - 1) / totalPositions.value * 100)
+  return Math.round(cursor.value / totalPositions.value * 100)
 })
 
 // Get description text for a rating value
@@ -129,7 +108,7 @@ const currentValue = computed((): KinkChoiceType => {
   if (!currentKink.value || !currentPosition.value)
     return 0
   return getKinkChoice(
-    currentKink.value.kink,
+    currentKink.value,
     currentPosition.value,
   )
 })
@@ -154,19 +133,12 @@ function handleSelect(rating: KinkChoiceType) {
   if (!currentKink.value || !currentPosition.value)
     return
 
-  // Save current position to history before moving on
-  quizHistory.value.push({
-    kinkIndex: currentIndex.value,
-    positionIndex: currentPositionIndex.value,
-    value: currentValue.value,
-  })
-
   // Provide haptic feedback on mobile
   triggerHapticFeedback()
 
-  // Save the selection
+  // Save the selection. List state still owns the write.
   setKinkChoice(
-    currentKink.value.kink,
+    currentKink.value,
     currentPosition.value,
     rating,
   )
@@ -175,100 +147,61 @@ function handleSelect(rating: KinkChoiceType) {
   nextQuestion()
 }
 
-// Move to the next position or kink
+// Move to the next question
 function nextQuestion() {
-  if (!currentKink.value)
+  if (!currentRow.value)
     return
 
-  // Save current position to history before moving on
-  quizHistory.value.push({
-    kinkIndex: currentIndex.value,
-    positionIndex: currentPositionIndex.value,
-    value: currentValue.value,
-  })
+  visitedCursors.value.push(cursor.value)
+  cursor.value++
 
-  // Check if there are more positions for the current kink
-  if (currentPositionIndex.value < currentKink.value.positions.length - 1) {
-    // Move to the next position for the current kink
-    currentPositionIndex.value++
-  }
-  else {
-    // Move to the next kink and reset position index
-    currentIndex.value++
-    currentPositionIndex.value = 0
-
-    // Check if we've completed all kinks
-    if (currentIndex.value >= allKinks.value.length) {
-      quizCompleted.value = true
-    }
+  // Check if we've completed all questions
+  if (cursor.value >= quizRows.value.length) {
+    quizCompleted.value = true
   }
 }
 
 // Go back to the previous question
 function previousQuestion() {
-  if (quizHistory.value.length === 0)
+  const previous = visitedCursors.value.pop()
+  if (previous === undefined)
     return
 
-  const previousState = quizHistory.value.pop()
-  if (previousState) {
-    currentIndex.value = previousState.kinkIndex
-    currentPositionIndex.value = previousState.positionIndex
+  cursor.value = previous
 
-    // If we went back from completed state, ensure it's not marked completed
-    if (quizCompleted.value) {
-      quizCompleted.value = false
-    }
+  // If we went back from completed state, ensure it's not marked completed
+  if (quizCompleted.value) {
+    quizCompleted.value = false
   }
 }
 
+// The new-only quiz is available when its own projection holds a question. The
+// count comes from the same projection, so the badge can never disagree with it.
+const newQuizRows = computed(() =>
+  projectQuizRows({ catalogue: kinkList, list: activeList.value }, 'newAndUnanswered'),
+)
+const newQuizQuestionCount = computed(() => newQuizRows.value.length)
+const newKinksAvailable = computed(() => newQuizQuestionCount.value > 0)
+
 // Start the quiz
 function startQuiz() {
+  quizRows.value = projectQuizRows({ catalogue: kinkList, list: activeList.value }, 'all')
   hasStarted.value = true
   isNewKinksOnly.value = false
-  allKinks.value = getVisibleKinksForQuiz()
-  currentIndex.value = 0
-  currentPositionIndex.value = 0
-  quizCompleted.value = false
-  quizHistory.value = []
+  cursor.value = 0
+  quizCompleted.value = quizRows.value.length === 0
+  visitedCursors.value = []
 }
 
 // Start quiz with only new kinks
 function startNewKinksQuiz() {
+  quizRows.value = newQuizRows.value
   hasStarted.value = true
   isNewKinksOnly.value = true
-  const allVisibleKinks = getVisibleKinksForQuiz()
-
-  // Filter to only include new kinks with unfilled positions. "New" is
-  // relative to the list's creation (ADR 0002), not a wall-clock window.
-  const filteredKinks = allVisibleKinks
-    .filter(item => isKinkNew(item.kink.addedAt))
-    .map((item) => {
-      // Create a copy of the item with only unfilled positions
-      const unfilled = {
-        ...item,
-        positions: item.positions.filter((position) => {
-          // Check if this position is unfilled
-          const value = getKinkChoice(item.kink, position)
-          return value === 0
-        }),
-      }
-      return unfilled
-    })
-    // Only include kinks that have at least one unfilled position after filtering
-    .filter(item => item.positions.length > 0)
-
-  allKinks.value = filteredKinks
-
-  // If no kinks with unfilled positions, mark as completed
-  if (filteredKinks.length === 0) {
-    quizCompleted.value = true
-  }
-  else {
-    currentIndex.value = 0
-    currentPositionIndex.value = 0
-    quizCompleted.value = false
-    quizHistory.value = []
-  }
+  cursor.value = 0
+  // With no matching question the quiz is already over
+  quizCompleted.value = quizRows.value.length === 0
+  visitedCursors.value = []
 }
 
 // Handle cancel (close modal)
@@ -278,24 +211,20 @@ function handleCancel() {
 
 // Show tooltip for the current kink
 function getKinkTooltip(): string {
-  if (!currentKink.value)
+  if (!currentRow.value)
     return ''
 
-  const kinkId = currentKink.value.kink.id
-  const categoryId = currentKink.value.categoryId
-
-  return t(`${categoryId}.${kinkId}.tooltip`, '')
+  return t(`${currentRow.value.categoryId}.${currentRow.value.kink.id}.tooltip`, '')
 }
 
 // Get a pretty name for the current kink
 function getKinkLabel(): string {
-  if (!currentKink.value)
+  if (!currentRow.value)
     return ''
 
-  const kinkId = currentKink.value.kink.id
-  const categoryId = currentKink.value.categoryId
+  const kinkId = currentRow.value.kink.id
 
-  return t(`${categoryId}.${kinkId}.label`, kinkId)
+  return t(`${currentRow.value.categoryId}.${kinkId}.label`, kinkId)
 }
 
 // Get the appropriate title based on quiz state
@@ -356,7 +285,7 @@ const quizTitle = computed(() => {
               variant="soft"
               @click="startNewKinksQuiz"
             >
-              {{ t('app.quiz_new_kinks_count', { count: newUnfilledPositionsCount }) }}
+              {{ t('app.quiz_new_kinks_count', { count: newQuizQuestionCount }) }}
             </UButton>
           </div>
         </div>
@@ -386,7 +315,7 @@ const quizTitle = computed(() => {
         </div>
 
         <!-- Quiz question -->
-        <div v-else-if="currentKink && currentPosition" class="flex-grow flex flex-col">
+        <div v-else-if="currentRow" class="flex-grow flex flex-col">
           <!-- Progress bar -->
           <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-4 overflow-hidden">
             <div class="bg-primary-500 h-2 rounded-full transition-all duration-500 ease-out" :style="{ width: `${progress}%` }" />
@@ -396,7 +325,7 @@ const quizTitle = computed(() => {
           <div class="text-center space-y-1 mb-1">
             <UBadge size="sm" color="neutral" class="mb-0.5">
               <UIcon name="iconamoon:category-fill" class="text-xs" />
-              {{ t(`categories.${currentKink.categoryId}`) }}
+              {{ t(`categories.${currentRow.categoryId}`) }}
             </UBadge>
 
             <h3 class="text-lg font-semibold">
@@ -461,7 +390,7 @@ const quizTitle = computed(() => {
           <!-- Navigation buttons -->
           <div class="flex justify-between mt-3">
             <UButton
-              v-if="quizHistory.length > 0"
+              v-if="visitedCursors.length > 0"
               variant="ghost"
               icon="i-lucide-arrow-left"
               @click="previousQuestion"
