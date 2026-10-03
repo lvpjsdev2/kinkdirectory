@@ -20,7 +20,6 @@ const { t } = useI18n()
 const {
   activeList,
   setKinkChoice,
-  getKinkChoice,
 } = useKinkListState()
 const { kinkChoiceOrder, settings } = useSettings()
 
@@ -103,15 +102,9 @@ function getRatingDescription(rating: KinkChoiceType): string {
   return t('choices.favorite')
 }
 
-// Get the currently selected value for the current kink and position
-const currentValue = computed((): KinkChoiceType => {
-  if (!currentKink.value || !currentPosition.value)
-    return 0
-  return getKinkChoice(
-    currentKink.value,
-    currentPosition.value,
-  )
-})
+// Get the currently selected value for the current kink and position. The
+// projected row already carries it, so the quiz never resolves it a second way.
+const currentValue = computed((): KinkChoiceType => currentRow.value?.choice ?? 0)
 
 // Position wording is shared with the list table so a position is named the
 // same way everywhere. See KINK_POSITION_DISPLAY.

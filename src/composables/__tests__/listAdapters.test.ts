@@ -136,5 +136,38 @@ describe('list adapters', () => {
       expect(countNewKinks(projectAll(catalogue, null).rows)).toBe(0)
       expect(countNewKinks(projectAll(catalogue, list('both', {})).rows)).toBe(0)
     })
+
+    it('counts a New Kink only where this List role can answer it', () => {
+      // A New Kink the List has no Position for cannot be rated, so it is not
+      // something the List is missing and must not inflate the count.
+      const catalogue = [
+        category('a', [roleSpecificKink(1, [DOM, DOM_PARTNER], CREATED_S + 10)]),
+      ]
+
+      expect(countNewKinks(projectAll(catalogue, list('dom', {})).rows)).toBe(1)
+      expect(countNewKinks(projectAll(catalogue, list('sub', {})).rows)).toBe(0)
+    })
+
+    it('agrees with itself whichever projection the count is read from', () => {
+      // The badge reads the whole List and the filtered screen both have to
+      // report the same New Kinks, so turning a Display filter on cannot make a
+      // New Kink appear or vanish from the count.
+      const catalogue = [
+        category('a', [
+          generalKink(1, CREATED_S + 10),
+          roleSpecificKink(2, [DOM, DOM_PARTNER], CREATED_S + 10),
+          generalKink(3, CREATED_S - 10),
+        ]),
+      ]
+      const active = list('both', {})
+
+      const fromWholeList = countNewKinks(projectAll(catalogue, active).rows)
+      const fromNewFilter = countNewKinks(
+        projectScreen(catalogue, active, filters({ showOnlyNew: true })).rows,
+      )
+
+      expect(fromWholeList).toBe(2)
+      expect(fromNewFilter).toBe(fromWholeList)
+    })
   })
 })

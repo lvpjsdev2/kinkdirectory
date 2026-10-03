@@ -41,6 +41,8 @@ const isVisible = computed(() => generalRows.value.length > 0 || roleSpecificRow
           :category-id="category.categoryId"
           :kink="row.kink"
           :position="row.position"
+          :choice="row.choice"
+          :is-new="row.isNew"
           :is-last-item="index === generalRows.length - 1"
         />
       </template>
@@ -63,6 +65,8 @@ const isVisible = computed(() => generalRows.value.length > 0 || roleSpecificRow
           :category-id="category.categoryId"
           :kink="row.kink"
           :position="row.position"
+          :choice="row.choice"
+          :is-new="row.isNew"
           :is-last-item="index === roleSpecificRows.length - 1"
         />
       </template>

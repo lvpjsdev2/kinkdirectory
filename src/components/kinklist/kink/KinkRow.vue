@@ -12,14 +12,16 @@ const props = defineProps<{
   categoryId: string
   kink: KinkDefinition
   position: KinkPosition
+  choice: KinkChoiceType
+  isNew: boolean
   isLastItem?: boolean
 }>()
 const { t } = useI18n()
-const { setKinkChoice, getKinkChoice } = useKinkListState()
+const { setKinkChoice } = useKinkListState()
 
 function handleClick(selectedValue: KinkChoiceType) {
   // If user clicks the "Not Entered" (0) button or the currently selected value, set to 0
-  const currentValue = getKinkChoice(props.kink, props.position)
+  const currentValue = props.choice
 
   // If clicking the same value or explicitly clicking 0, set to 0
   // Otherwise set to the selected value
@@ -44,7 +46,7 @@ const positionLabel = computed(() =>
       <KinkLabel
         :label="t(labelPath)"
         :tooltip="t(tooltipPath)"
-        :added-at="kink.addedAt"
+        :is-new="isNew"
         :position-label="positionLabel"
       />
     </template>
@@ -53,7 +55,7 @@ const positionLabel = computed(() =>
       <td class="text-center whitespace-nowrap py-2 px-0 sm:px-1 min-w-[40px] sm:min-w-[50px]">
         <div class="flex justify-center items-center">
           <KinkChoice
-            :value="getKinkChoice(kink, position)"
+            :value="choice"
             :on-click="handleClick"
             :kink-name="positionLabel ? `${t(labelPath)} (${positionLabel})` : t(labelPath)"
             :tooltip="t(tooltipPath)"

@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { useKinkListState } from '../../../composables/useKinkList'
+import { useListProjection } from '../../../composables/useListProjection'
 import CreateListForm from '../modals/CreateListForm.vue'
 
 const { t } = useI18n()
-const { kinkLists, activeListId, recentlyAddedKinks: recentlyAddedKinksCount } = useKinkListState()
+const { kinkLists, activeListId } = useKinkListState()
+// The New badge here is the same count the List screen shows: one derivation of
+// what "New" means, so the two cannot drift apart.
+const { newKinkCount: recentlyAddedKinksCount } = useListProjection()
 const overlay = useOverlay()
 
 function handleListSelection(id: string) {
